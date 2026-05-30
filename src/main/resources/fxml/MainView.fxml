@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ua.lpnu.deposits.ui.MainController">
+
+    <!-- ===== SIDEBAR (left) ===== -->
+    <left>
+        <VBox styleClass="sidebar">
+
+            <!-- Header / Logo -->
+            <VBox styleClass="sidebar-header" alignment="CENTER" fillWidth="true">
+                <Label text="🏦" styleClass="sidebar-logo"/>
+                <Label text="Депозитний Помічник" styleClass="sidebar-app-name"
+                       wrapText="true"/>
+                <Label text="Облік вкладів" styleClass="sidebar-app-subtitle"/>
+            </VBox>
+
+            <!-- Navigation -->
+            <VBox style="-fx-padding: 12 8 8 8; -fx-spacing: 3;">
+                <Label text="НАВІГАЦІЯ" styleClass="nav-section-label"/>
+
+                <Button fx:id="navDashboard"
+                        text="🏠  Головна"
+                        styleClass="nav-btn"
+                        onAction="#onNavDashboard"
+                        maxWidth="Infinity"/>
+
+                <Button fx:id="navDeposits"
+                        text="💰  Депозити"
+                        styleClass="nav-btn"
+                        onAction="#onNavDeposits"
+                        maxWidth="Infinity"/>
+
+                <Button fx:id="navBanks"
+                        text="🏛  Банки"
+                        styleClass="nav-btn"
+                        onAction="#onNavBanks"
+                        maxWidth="Infinity"/>
+
+                <Button fx:id="navClients"
+                        text="👥  Клієнти"
+                        styleClass="nav-btn"
+                        onAction="#onNavClients"
+                        maxWidth="Infinity"/>
+
+                <Button fx:id="navSearch"
+                        text="🔍  Пошук"
+                        styleClass="nav-btn"
+                        onAction="#onNavSearch"
+                        maxWidth="Infinity"/>
+            </VBox>
+
+            <!-- Spacer pushes footer to bottom -->
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <!-- Footer: logged-in user -->
+            <VBox styleClass="sidebar-footer" alignment="BOTTOM_LEFT">
+                <Label text="Поточний користувач" styleClass="sidebar-user-label"/>
+                <Label fx:id="sidebarUserLabel"
+                       text="—"
+                       styleClass="sidebar-user-name"/>
+            </VBox>
+
+        </VBox>
+    </left>
+
+    <!-- ===== MAIN AREA (center) ===== -->
+    <center>
+        <VBox>
+
+            <!-- Top bar -->
+            <HBox styleClass="topbar" alignment="CENTER_LEFT" VBox.vgrow="NEVER">
+                <Label fx:id="topbarTitle" text="Головна" styleClass="topbar-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="topbarUserChip" text="👤 admin" styleClass="topbar-user-chip"/>
+                <Region style="-fx-min-width: 12;"/>
+                <Button text="Вийти" styleClass="logout-btn" onAction="#onLogout"/>
+            </HBox>
+
+            <!-- Content stack: all views sit here, only one visible at a time -->
+            <StackPane fx:id="contentPane" VBox.vgrow="ALWAYS">
+                <fx:include source="DashboardView.fxml"     fx:id="dashboardRoot"/>
+                <fx:include source="DepositListView.fxml"   fx:id="depositsRoot"/>
+                <fx:include source="BankListView.fxml"      fx:id="banksRoot"/>
+                <fx:include source="ClientListView.fxml"    fx:id="clientsRoot"/>
+                <fx:include source="SearchFilterView.fxml"  fx:id="searchRoot"/>
+            </StackPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>

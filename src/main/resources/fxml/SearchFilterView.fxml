@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ua.lpnu.deposits.ui.SearchFilterController"
+           dividerPositions="0.26"
+           maxWidth="Infinity" maxHeight="Infinity"
+           style="-fx-background-color: #f0f4f8;">
+
+    <!-- ===== LEFT: filter panel ===== -->
+    <ScrollPane fitToWidth="true"
+                style="-fx-background-color: white; -fx-border-color: transparent;">
+        <content>
+            <VBox spacing="8" styleClass="filter-panel">
+
+                <Label text="Фільтри" styleClass="section-title"/>
+
+                <!-- Тип депозиту -->
+                <Label text="Тип депозиту:" styleClass="form-label"/>
+                <ComboBox fx:id="typeFilterCombo" maxWidth="Infinity"/>
+
+                <!-- Валюта -->
+                <Label text="Валюта:" styleClass="form-label"/>
+                <TextField fx:id="currencyFilterField" promptText="UAH"/>
+
+                <!-- Ставка % -->
+                <Label text="Ставка % (від — до):" styleClass="form-label"/>
+                <HBox spacing="6">
+                    <TextField fx:id="minRateField" promptText="0"   HBox.hgrow="ALWAYS"/>
+                    <Label text="—" style="-fx-alignment: center; -fx-padding: 0 4;"/>
+                    <TextField fx:id="maxRateField" promptText="100" HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Мін. сума -->
+                <Label text="Мін. сума (від — до):" styleClass="form-label"/>
+                <HBox spacing="6">
+                    <TextField fx:id="minAmountFromField" promptText="0" HBox.hgrow="ALWAYS"/>
+                    <Label text="—" style="-fx-alignment: center; -fx-padding: 0 4;"/>
+                    <TextField fx:id="maxAmountToField" promptText="∞"  HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Термін -->
+                <Label text="Термін, міс. (від — до):" styleClass="form-label"/>
+                <HBox spacing="6">
+                    <TextField fx:id="minTermField" promptText="0"   HBox.hgrow="ALWAYS"/>
+                    <Label text="—" style="-fx-alignment: center; -fx-padding: 0 4;"/>
+                    <TextField fx:id="maxTermField" promptText="360" HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Можливості -->
+                <Label text="Можливості:" styleClass="form-label"/>
+                <CheckBox fx:id="withdrawCheck"  text="Дострокове зняття"/>
+                <CheckBox fx:id="replenishCheck" text="Поповнення рахунку"/>
+
+                <Separator style="-fx-padding: 4 0;"/>
+
+                <!-- Сортування -->
+                <Label text="Сортувати за:" styleClass="form-label"/>
+                <ComboBox fx:id="sortFieldCombo" maxWidth="Infinity"/>
+                <HBox spacing="12">
+                    <RadioButton fx:id="ascRadio"  text="↑ Зростання" selected="true"/>
+                    <RadioButton fx:id="descRadio" text="↓ Спадання"/>
+                </HBox>
+
+                <Separator style="-fx-padding: 4 0;"/>
+
+                <HBox spacing="8">
+                    <Button text="✔  Застосувати" onAction="#onApply"
+                            styleClass="primary-button"
+                            HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    <Button text="✕  Скинути" onAction="#onReset"
+                            HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                </HBox>
+
+            </VBox>
+        </content>
+    </ScrollPane>
+
+    <!-- ===== RIGHT: results panel ===== -->
+    <VBox spacing="0" style="-fx-background-color: #f0f4f8;">
+
+        <HBox style="-fx-background-color: white; -fx-padding: 10 16; -fx-border-color: transparent transparent #e2e8f0 transparent; -fx-border-width: 0 0 1 0;"
+              alignment="CENTER_LEFT">
+            <Label text="Результати пошуку" styleClass="section-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="resultCountLabel" styleClass="count-label"/>
+        </HBox>
+
+        <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS"
+                   style="-fx-background-color: white; -fx-border-width: 0;">
+            <columns>
+                <TableColumn fx:id="rNameColumn"      text="Назва"      prefWidth="180"/>
+                <TableColumn fx:id="rBankColumn"      text="Банк"       prefWidth="140"/>
+                <TableColumn fx:id="rTypeColumn"      text="Тип"        prefWidth="120"/>
+                <TableColumn fx:id="rCurrencyColumn"  text="Валюта"     prefWidth="75"/>
+                <TableColumn fx:id="rMinAmtColumn"    text="Мін. сума"  prefWidth="110"/>
+                <TableColumn fx:id="rRateColumn"      text="Ставка %"   prefWidth="90"/>
+                <TableColumn fx:id="rTermColumn"      text="Термін"     prefWidth="100"/>
+                <TableColumn fx:id="rWithdrawColumn"  text="Дострок."   prefWidth="90"/>
+                <TableColumn fx:id="rReplenishColumn" text="Поповнення" prefWidth="100"/>
+            </columns>
+            <placeholder>
+                <Label text="Задайте критерії та натисніть «✔ Застосувати»"
+                       style="-fx-text-fill: #9ca3af;"/>
+            </placeholder>
+        </TableView>
+
+    </VBox>
+
+</SplitPane>

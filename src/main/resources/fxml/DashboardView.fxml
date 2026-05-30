@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ua.lpnu.deposits.ui.DashboardController"
+      styleClass="dashboard-root"
+      maxWidth="Infinity" maxHeight="Infinity">
+
+    <!-- Welcome row -->
+    <Label fx:id="welcomeLabel" styleClass="dashboard-welcome"/>
+
+    <!-- ===== Stat cards row ===== -->
+    <HBox styleClass="stat-cards-row" fillHeight="true">
+
+        <!-- Card 1: Total deposits -->
+        <VBox styleClass="stat-card stat-card-blue" HBox.hgrow="ALWAYS">
+            <Label text="💰" styleClass="stat-card-icon"/>
+            <Label fx:id="depositCountLabel" text="—" styleClass="stat-card-value"/>
+            <Label text="Депозитів у базі" styleClass="stat-card-label"/>
+        </VBox>
+
+        <!-- Card 2: Average rate -->
+        <VBox styleClass="stat-card stat-card-green" HBox.hgrow="ALWAYS">
+            <Label text="📈" styleClass="stat-card-icon"/>
+            <Label fx:id="avgRateLabel" text="—" styleClass="stat-card-value"/>
+            <Label text="Середня ставка" styleClass="stat-card-label"/>
+        </VBox>
+
+        <!-- Card 3: Banks count -->
+        <VBox styleClass="stat-card stat-card-navy" HBox.hgrow="ALWAYS">
+            <Label text="🏛" styleClass="stat-card-icon"/>
+            <Label fx:id="bankCountLabel" text="—" styleClass="stat-card-value"/>
+            <Label text="Банків у базі" styleClass="stat-card-label"/>
+        </VBox>
+
+        <!-- Card 4: Max rate -->
+        <VBox styleClass="stat-card stat-card-accent" HBox.hgrow="ALWAYS">
+            <Label text="🏆" styleClass="stat-card-icon"/>
+            <Label fx:id="maxRateLabel" text="—" styleClass="stat-card-value"/>
+            <Label text="Найвища ставка" styleClass="stat-card-label"/>
+        </VBox>
+    </HBox>
+
+    <!-- ===== Best deposit highlight ===== -->
+    <VBox styleClass="best-deposit-card" spacing="6">
+        <Label text="🏅  Найкраща пропозиція прямо зараз" styleClass="best-deposit-label"/>
+        <Label fx:id="bestNameLabel"   text="—" styleClass="best-deposit-value"/>
+        <Label fx:id="bestDetailsLabel" text="" styleClass="best-deposit-sub"/>
+    </VBox>
+
+    <!-- ===== Quick-start hint ===== -->
+    <VBox styleClass="hint-card" spacing="8">
+        <Label text="🚀  Швидкий старт" style="-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #1a2744;"/>
+        <Label text="• Перейдіть до «Банки» щоб додати або переглянути банки"
+               style="-fx-text-fill: #374151;"/>
+        <Label text="• Перейдіть до «Депозити» щоб управляти депозитними пропозиціями"
+               style="-fx-text-fill: #374151;"/>
+        <Label text="• Використовуйте «Пошук» для фільтрування та сортування"
+               style="-fx-text-fill: #374151;"/>
+    </VBox>
+
+    <!-- Spacer -->
+    <Region VBox.vgrow="ALWAYS"/>
+
+</VBox>
