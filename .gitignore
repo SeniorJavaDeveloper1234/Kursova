@@ -36,5 +36,9 @@ build/
 # Spring / local config
 application.properties
 
+# Credentials — never commit real passwords
+.env
+src/main/resources/email.properties
+
 # Mac
 .DS_Store
