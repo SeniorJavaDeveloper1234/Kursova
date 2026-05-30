@@ -1,0 +1,40 @@
+# Build output
+target/
+
+# SQLite database file
+*.db
+
+# Application logs
+logs/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# VS Code
+.vscode/
+
+# Spring / local config
+application.properties
+
+# Mac
+.DS_Store
