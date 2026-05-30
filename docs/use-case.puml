@@ -1,98 +1,130 @@
-@startuml UseCaseDiagram
+@startuml use-case
 title Депозитний Помічник — Use Case Diagram
 
 skinparam actorStyle awesome
-skinparam packageStyle rectangle
-skinparam usecaseBorderColor #4a90d9
-skinparam usecaseBackgroundColor #eef6ff
-skinparam actorBorderColor #1e2d4f
-skinparam arrowColor #4a90d9
-left to right direction
+skinparam DefaultFontName Segoe UI
+skinparam DefaultFontSize 12
 
-actor "Адміністратор" as Admin
+skinparam usecase {
+    BackgroundColor      #eef6ff
+    BorderColor          #4a90d9
+    BorderThickness      1.5
+    FontColor            #1a2744
+    FontSize             12
+}
+skinparam actor {
+    BackgroundColor      #1e2d4f
+    FontColor            #ffffff
+    BorderColor          #4a90d9
+    FontSize             13
+    FontStyle            bold
+}
+skinparam package {
+    BackgroundColor      #f8fafc
+    BorderColor          #cbd5e1
+    FontColor            #1e2d4f
+    FontStyle            bold
+}
+skinparam ArrowColor     #4a90d9
+skinparam ArrowThickness 1.5
 
+' ─── Actors ──────────────────────────────────────────────────────
+actor "Гість"           as Guest
+actor "Клієнт"          as Client
+actor "Адміністратор"   as Admin
+
+' Inheritance: Admin can do everything Client can; Client can do everything Guest can
+Guest  <|-- Client
+Client <|-- Admin
+
+' ─── System boundary ─────────────────────────────────────────────
 rectangle "Депозитний Помічник" {
 
+    ' ── Авторизація ──────────────────────────────────────────────
     package "Авторизація" {
-        usecase "Увійти в систему"       as UC_Login
-        usecase "Вийти з системи"        as UC_Logout
+        usecase "Увійти в систему"     as UC_Login
+        usecase "Вийти з системи"      as UC_Logout
     }
 
+    ' ── Головна панель ───────────────────────────────────────────
     package "Головна панель" {
-        usecase "Переглянути статистику" as UC_Dashboard
+        usecase "Переглянути статистику\n(кількість депозитів, середня ставка,\nнайкращий депозит)" as UC_Dashboard
     }
 
+    ' ── Перегляд даних ───────────────────────────────────────────
+    package "Перегляд" {
+        usecase "Переглянути список депозитів\nбагатьох банків"   as UC_ViewDeposits
+        usecase "Переглянути список банків"                        as UC_ViewBanks
+        usecase "Пошук банку за назвою"                            as UC_SearchBank
+    }
+
+    ' ── Пошук і фільтрація ───────────────────────────────────────
+    package "Пошук та фільтрація депозитів" {
+        usecase "Шукати та фільтрувати депозити"          as UC_Search
+        usecase "Фільтрувати за типом\n(строковий / ощадний / до запитання)" as UC_FType
+        usecase "Фільтрувати за ставкою\n(діапазон від/до)"    as UC_FRate
+        usecase "Фільтрувати за мін. сумою\n(діапазон від/до)" as UC_FAmount
+        usecase "Фільтрувати за терміном\n(діапазон від/до)"   as UC_FTerm
+        usecase "Фільтрувати:\nдострокове зняття дозволено"    as UC_FWithdraw
+        usecase "Фільтрувати:\nпоповнення дозволено"           as UC_FReplenish
+        usecase "Сортувати результати\n(назва / ставка / сума / термін)" as UC_Sort
+    }
+
+    ' ── Управління банками ───────────────────────────────────────
     package "Управління банками" {
-        usecase "Переглянути банки"      as UC_ViewBanks
-        usecase "Додати банк"            as UC_AddBank
-        usecase "Редагувати банк"        as UC_EditBank
-        usecase "Видалити банк"          as UC_DeleteBank
-        usecase "Пошук банку за назвою"  as UC_SearchBank
+        usecase "Додати банк"       as UC_AddBank
+        usecase "Редагувати банк"   as UC_EditBank
+        usecase "Видалити банк"     as UC_DeleteBank
     }
 
+    ' ── Управління депозитами ────────────────────────────────────
     package "Управління депозитами" {
-        usecase "Переглянути депозити"   as UC_ViewDeposits
-        usecase "Додати депозит"         as UC_AddDeposit
-        usecase "Редагувати депозит"     as UC_EditDeposit
-        usecase "Видалити депозит"       as UC_DeleteDeposit
+        usecase "Додати депозит"    as UC_AddDeposit
+        usecase "Редагувати депозит\n(ставка, термін, штраф, валюта)"  as UC_EditDeposit
+        usecase "Видалити депозит"  as UC_DeleteDeposit
     }
 
+    ' ── Управління клієнтами ─────────────────────────────────────
     package "Управління клієнтами" {
-        usecase "Переглянути клієнтів"      as UC_ViewClients
-        usecase "Додати клієнта"            as UC_AddClient
-        usecase "Редагувати клієнта"        as UC_EditClient
-        usecase "Видалити клієнта"          as UC_DeleteClient
-        usecase "Пошук клієнта за прізвищем" as UC_SearchClient
-    }
-
-    package "Пошук та фільтрація" {
-        usecase "Пошук і фільтр депозитів"       as UC_Search
-        usecase "Фільтр за типом депозиту"        as UC_FType
-        usecase "Фільтр: дострокове зняття"       as UC_FWithdraw
-        usecase "Фільтр: можливість поповнення"   as UC_FReplenish
-        usecase "Пошук за діапазоном ставки"      as UC_FRate
-        usecase "Пошук за діапазоном суми"        as UC_FAmount
-        usecase "Пошук за терміном"               as UC_FTerm
-        usecase "Сортування результатів"          as UC_Sort
+        usecase "Переглянути список клієнтів"   as UC_ViewClients
+        usecase "Додати клієнта"                as UC_AddClient
+        usecase "Редагувати клієнта"            as UC_EditClient
+        usecase "Видалити клієнта"              as UC_DeleteClient
+        usecase "Пошук клієнта за прізвищем"    as UC_SearchClient
     }
 }
 
-' ── авторизація ─────────────────────────────────────────────────
-Admin --> UC_Login
-Admin --> UC_Logout
+' ─── Guest associations ──────────────────────────────────────────
+Guest --> UC_Login
 
-' ── дашборд ──────────────────────────────────────────────────────
-Admin --> UC_Dashboard
+' ─── Client associations (read + search; inherits Login) ─────────
+Client --> UC_Logout
+Client --> UC_Dashboard
+Client --> UC_ViewDeposits
+Client --> UC_ViewBanks
+Client --> UC_SearchBank
+Client --> UC_Search
 
-' ── банки ─────────────────────────────────────────────────────────
-Admin --> UC_ViewBanks
+' ─── Admin associations (CRUD; inherits all Client) ──────────────
 Admin --> UC_AddBank
 Admin --> UC_EditBank
 Admin --> UC_DeleteBank
-Admin --> UC_SearchBank
-
-' ── депозити ─────────────────────────────────────────────────────
-Admin --> UC_ViewDeposits
 Admin --> UC_AddDeposit
 Admin --> UC_EditDeposit
 Admin --> UC_DeleteDeposit
-
-' ── клієнти ──────────────────────────────────────────────────────
 Admin --> UC_ViewClients
 Admin --> UC_AddClient
 Admin --> UC_EditClient
 Admin --> UC_DeleteClient
 Admin --> UC_SearchClient
 
-' ── пошук та фільтр ──────────────────────────────────────────────
-Admin --> UC_Search
-
-UC_Search ..> UC_FType      : <<include>>
-UC_Search ..> UC_FWithdraw  : <<include>>
-UC_Search ..> UC_FReplenish : <<include>>
-UC_Search ..> UC_FRate      : <<include>>
-UC_Search ..> UC_FAmount    : <<include>>
-UC_Search ..> UC_FTerm      : <<include>>
-UC_Search ..> UC_Sort       : <<include>>
+' ─── Search sub-filters (<<include>>) ────────────────────────────
+UC_Search ..> UC_FType     : <<include>>
+UC_Search ..> UC_FRate     : <<include>>
+UC_Search ..> UC_FAmount   : <<include>>
+UC_Search ..> UC_FTerm     : <<include>>
+UC_Search ..> UC_FWithdraw : <<include>>
+UC_Search ..> UC_FReplenish: <<include>>
+UC_Search ..> UC_Sort      : <<include>>
 
 @enduml

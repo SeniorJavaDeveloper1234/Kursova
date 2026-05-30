@@ -40,5 +40,8 @@ application.properties
 .env
 src/main/resources/email.properties
 
+# PlantUML binary (download manually: plantuml.jar)
+docs/plantuml.jar
+
 # Mac
 .DS_Store

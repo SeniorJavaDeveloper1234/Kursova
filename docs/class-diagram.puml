@@ -1,18 +1,26 @@
-@startuml ClassDiagram
+@startuml class-diagram
 title Депозитний Помічник — Class Diagram
 
+skinparam DefaultFontName Segoe UI
+skinparam DefaultFontSize 11
 skinparam classAttributeIconSize 0
-skinparam classFontSize 11
-skinparam packageStyle rectangle
+skinparam classFontSize 12
+skinparam classFontStyle bold
 skinparam classBackgroundColor #ffffff
 skinparam classBorderColor #4a90d9
+skinparam classBorderThickness 1.5
+skinparam packageBackgroundColor #f8fafc
 skinparam packageBorderColor #1e2d4f
-skinparam arrowColor #374151
+skinparam packageFontColor #1e2d4f
+skinparam packageFontStyle bold
+skinparam ArrowColor #374151
+skinparam ArrowThickness 1.2
 skinparam linetype ortho
+hide empty members
 
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
 '  MODEL
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
 package "ua.lpnu.deposits.model" #eef6ff {
 
     enum DepositType {
@@ -22,273 +30,281 @@ package "ua.lpnu.deposits.model" #eef6ff {
     }
 
     abstract class Deposit {
-        - id : int
-        - bankId : int
-        - name : String
-        - type : DepositType
-        - currency : String
-        - minAmount : double
-        - interestRate : double
-        - termMonths : int
+        - id            : int
+        - bankId        : int
+        - name          : String
+        - type          : DepositType
+        - currency      : String
+        - minAmount     : double
+        - interestRate  : double
+        - termMonths    : int
         - canWithdrawEarly : boolean
-        - canReplenish : boolean
-        - penaltyRate : double
-        --
-        + {abstract} calculateProfit(principal: double, months: int) : double
-        + calculateTotalReturn(principal: double, months: int) : double
+        - canReplenish  : boolean
+        - penaltyRate   : double
+        ..
+        + {abstract} calculateProfit(principal : double, months : int) : double
+        + calculateTotalReturn(principal : double, months : int) : double
         + getId() : int
         + getBankId() : int
         + getName() : String
+        + getType() : DepositType
+        + getCurrency() : String
+        + getMinAmount() : double
         + getInterestRate() : double
         + getTermMonths() : int
         + isCanWithdrawEarly() : boolean
         + isCanReplenish() : boolean
         + getPenaltyRate() : double
+        + setters for all fields
+        + toString() : String
     }
 
     class TermDeposit {
         + TermDeposit(id, bankId, name, currency,\n  minAmount, interestRate, termMonths, penaltyRate)
-        --
-        + calculateProfit(principal: double, months: int) : double
-        ' simple interest; penalty subtracted if months < term
+        + TermDeposit(bankId, name, currency,\n  minAmount, interestRate, termMonths, penaltyRate)
+        ..
+        + calculateProfit(principal : double, months : int) : double
+        ' simple interest; penalty deducted if months < term
     }
 
     class SavingsDeposit {
         + SavingsDeposit(id, bankId, name, currency,\n  minAmount, interestRate, termMonths)
-        --
-        + calculateProfit(principal: double, months: int) : double
+        + SavingsDeposit(bankId, name, currency,\n  minAmount, interestRate, termMonths)
+        ..
+        + calculateProfit(principal : double, months : int) : double
         ' compound interest, monthly compounding
     }
 
     class DemandDeposit {
         + DemandDeposit(id, bankId, name, currency,\n  minAmount, interestRate)
-        --
-        + calculateProfit(principal: double, months: int) : double
+        + DemandDeposit(bankId, name, currency,\n  minAmount, interestRate)
+        ..
+        + calculateProfit(principal : double, months : int) : double
         ' simple interest on actual holding period
     }
 
     class Bank {
-        - id : int
-        - name : String
+        - id     : int
+        - name   : String
         - rating : double
-        --
-        + Bank(name: String, rating: double)
-        + Bank(id: int, name: String, rating: double)
+        ..
+        + Bank(name : String, rating : double)
+        + Bank(id : int, name : String, rating : double)
+        ..
         + getId() : int
         + getName() : String
         + getRating() : double
+        + setId(id : int)
+        + setName(name : String)
+        + setRating(rating : double)
+        + toString() : String
     }
 
     class Client {
-        - id : int
+        - id        : int
         - firstName : String
-        - lastName : String
-        - email : String
-        --
+        - lastName  : String
+        - email     : String
+        ..
         + Client(firstName, lastName, email)
-        + getFullName() : String
+        + Client(id, firstName, lastName, email)
+        ..
         + getId() : int
         + getFirstName() : String
         + getLastName() : String
         + getEmail() : String
+        + getFullName() : String
+        + setters for all fields
+        + toString() : String
     }
 
     class ClientDeposit {
-        - id : int
-        - clientId : int
+        - id        : int
+        - clientId  : int
         - depositId : int
-        - amount : double
-        - openedAt : String
-        - status : String
-        --
+        - amount    : double
+        - openedAt  : String
+        - status    : String
+        ..
         + ClientDeposit(clientId, depositId, amount)
+        + ClientDeposit(id, clientId, depositId,\n  amount, openedAt, status)
+        ..
         + getId() : int
+        + getClientId() : int
+        + getDepositId() : int
         + getAmount() : double
+        + getOpenedAt() : String
         + getStatus() : String
-        + setStatus(status: String) : void
+        + setStatus(status : String)
+        + setters for all fields
+        + toString() : String
     }
 
     class User {
-        - id : int
-        - username : String
+        - id           : int
+        - username     : String
         - passwordHash : String
-        - role : String
-        --
+        - role         : String
+        ..
+        + User(id, username, passwordHash, role)
+        ..
+        + getId() : int
         + getUsername() : String
         + getPasswordHash() : String
         + getRole() : String
     }
 
-    Deposit <|-- TermDeposit
-    Deposit <|-- SavingsDeposit
-    Deposit <|-- DemandDeposit
-    Deposit --> DepositType : type
-
-    ClientDeposit "0..*" --> "1" Client    : belongs to
-    ClientDeposit "0..*" --> "1" Deposit   : references
-    Deposit       "0..*" --> "1" Bank      : offered by
+    Deposit  <|--  TermDeposit
+    Deposit  <|--  SavingsDeposit
+    Deposit  <|--  DemandDeposit
+    Deposit  "0..*" --> "1" DepositType : type
+    Deposit  "0..*" ---> "1" Bank       : offered by
+    ClientDeposit "0..*" --> "1" Client  : belongs to
+    ClientDeposit "0..*" --> "1" Deposit : references
 }
 
-' ═══════════════════════════════════════════════════════
-'  REPOSITORY — interfaces
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
+'  REPOSITORY — Interfaces
+' ═══════════════════════════════════════════════════════════════════
 package "ua.lpnu.deposits.repository" #fff8e1 {
 
     interface BankRepository {
-        + save(bank: Bank) : Bank
-        + findById(id: int) : Optional<Bank>
+        + save(bank : Bank) : Bank
+        + findById(id : int) : Optional<Bank>
         + findAll() : List<Bank>
-        + findByName(name: String) : List<Bank>
-        + delete(id: int) : void
+        + findByName(name : String) : List<Bank>
+        + delete(id : int) : void
     }
 
     interface DepositRepository {
-        + save(deposit: Deposit) : Deposit
-        + findById(id: int) : Optional<Deposit>
+        + save(deposit : Deposit) : Deposit
+        + findById(id : int) : Optional<Deposit>
         + findAll() : List<Deposit>
-        + findByType(type: DepositType) : List<Deposit>
-        + findByCurrency(currency: String) : List<Deposit>
-        + findByBankId(bankId: int) : List<Deposit>
-        + findByInterestRateBetween(min, max: double) : List<Deposit>
-        + delete(id: int) : void
+        + findByBankId(bankId : int) : List<Deposit>
+        + findByType(type : DepositType) : List<Deposit>
+        + findByCurrency(currency : String) : List<Deposit>
+        + findByInterestRateBetween(min : double, max : double) : List<Deposit>
+        + delete(id : int) : void
     }
 
     interface ClientRepository {
-        + save(client: Client) : Client
-        + findById(id: int) : Optional<Client>
+        + save(client : Client) : Client
+        + findById(id : int) : Optional<Client>
         + findAll() : List<Client>
-        + findByLastName(lastName: String) : List<Client>
-        + delete(id: int) : void
+        + findByLastName(lastName : String) : List<Client>
+        + findByEmail(email : String) : Optional<Client>
+        + delete(id : int) : void
     }
 
     interface ClientDepositRepository {
-        + save(cd: ClientDeposit) : ClientDeposit
-        + findById(id: int) : Optional<ClientDeposit>
-        + findByClientId(clientId: int) : List<ClientDeposit>
-        + delete(id: int) : void
+        + save(cd : ClientDeposit) : ClientDeposit
+        + findById(id : int) : Optional<ClientDeposit>
+        + findAll() : List<ClientDeposit>
+        + findByClientId(clientId : int) : List<ClientDeposit>
+        + findByDepositId(depositId : int) : List<ClientDeposit>
+        + findByStatus(status : String) : List<ClientDeposit>
+        + delete(id : int) : void
     }
 
     interface UserRepository {
-        + findByUsername(username: String) : Optional<User>
+        + findByUsername(username : String) : Optional<User>
+        + authenticate(username : String, plainText : String) : boolean
+        + save(user : User) : void
         + ensureDefaultAdmin() : void
     }
 
-    ' ── implementations ──────────────────────────────────
+    ' ── JDBC implementations ─────────────────────────────────────
     package "impl" {
         class JdbcBankRepository {
-            + save(bank: Bank) : Bank
-            + findAll() : List<Bank>
+            - mapRow(rs : ResultSet) : Bank
         }
         class JdbcDepositRepository {
-            - mapRow(rs: ResultSet) : Deposit
-            + save(deposit: Deposit) : Deposit
-            + findAll() : List<Deposit>
+            - mapRow(rs : ResultSet) : Deposit
+            ' factory: creates TermDeposit/SavingsDeposit/DemandDeposit
         }
         class JdbcClientRepository {
-            + save(client: Client) : Client
-            + findAll() : List<Client>
+            - mapRow(rs : ResultSet) : Client
         }
         class JdbcClientDepositRepository {
-            + save(cd: ClientDeposit) : ClientDeposit
-            + findByClientId(id: int) : List<ClientDeposit>
+            - mapRow(rs : ResultSet) : ClientDeposit
         }
         class JdbcUserRepository {
-            + findByUsername(username: String) : Optional<User>
-            + ensureDefaultAdmin() : void
+            - mapRow(rs : ResultSet) : User
         }
     }
 
-    BankRepository           <|.. JdbcBankRepository
-    DepositRepository        <|.. JdbcDepositRepository
-    ClientRepository         <|.. JdbcClientRepository
-    ClientDepositRepository  <|.. JdbcClientDepositRepository
-    UserRepository           <|.. JdbcUserRepository
+    BankRepository          <|..  JdbcBankRepository
+    DepositRepository       <|..  JdbcDepositRepository
+    ClientRepository        <|..  JdbcClientRepository
+    ClientDepositRepository <|..  JdbcClientDepositRepository
+    UserRepository          <|..  JdbcUserRepository
 }
 
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
 '  SERVICE
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
 package "ua.lpnu.deposits.service" #e8f5e9 {
 
     class BankService {
-        - logger : AppLogger
-        --
-        + createBank(bank: Bank) : Bank
-        + updateBank(bank: Bank) : Bank
-        + deleteBank(id: int) : void
-        + getBankById(id: int) : Optional<Bank>
+        - bankRepository    : BankRepository
+        - depositRepository : DepositRepository
+        ..
+        + BankService(bankRepo, depositRepo)
+        ..
+        + createBank(bank : Bank) : Bank
+        + updateBank(bank : Bank) : Bank
+        + deleteBank(id : int) : void
+        + getBankById(id : int) : Optional<Bank>
         + getAllBanks() : List<Bank>
-        + searchByName(name: String) : List<Bank>
-        + getDepositsForBank(bankId: int) : List<Deposit>
-        - validateBank(bank: Bank) : void
+        + searchByName(name : String) : List<Bank>
+        + getDepositsForBank(bankId : int) : List<Deposit>
+        - validateBank(bank : Bank) : void
     }
 
     class DepositService {
-        - logger : AppLogger
-        --
-        + createDeposit(deposit: Deposit) : Deposit
-        + updateDeposit(deposit: Deposit) : Deposit
-        + deleteDeposit(id: int) : void
+        - depositRepository       : DepositRepository
+        - clientRepository        : ClientRepository
+        - clientDepositRepository : ClientDepositRepository
+        ..
+        + DepositService(depositRepo, clientRepo, cdRepo)
+        ..
+        + createDeposit(deposit : Deposit) : Deposit
+        + updateDeposit(deposit : Deposit) : Deposit
+        + deleteDeposit(id : int) : void
+        + getDepositById(id : int) : Optional<Deposit>
         + getAllDeposits() : List<Deposit>
-        + getDepositsByType(type: DepositType) : List<Deposit>
-        + getDepositsByInterestRateRange(min, max) : List<Deposit>
-        + createClient(client: Client) : Client
-        + updateClient(client: Client) : Client
-        + deleteClient(id: int) : void
+        + getDepositsByType(type : DepositType) : List<Deposit>
+        + getDepositsByCurrency(currency : String) : List<Deposit>
+        + getDepositsByBank(bankId : int) : List<Deposit>
+        + getDepositsByInterestRateRange(min : double, max : double) : List<Deposit>
+        + createClient(client : Client) : Client
+        + updateClient(client : Client) : Client
+        + deleteClient(id : int) : void
+        + getClientById(id : int) : Optional<Client>
         + getAllClients() : List<Client>
-        + searchClientsByLastName(name: String) : List<Client>
+        + searchClientsByLastName(lastName : String) : List<Client>
         + openDeposit(clientId, depositId, amount) : ClientDeposit
-        + closeDeposit(clientDepositId: int) : void
-        + calculateExpectedReturn(cdId, months) : double
-        - validateDeposit(deposit: Deposit) : void
-        - validateClient(client: Client) : void
+        + closeDeposit(clientDepositId : int) : void
+        + calculateExpectedReturn(cdId : int, months : int) : double
+        + getClientDeposits(clientId : int) : List<ClientDeposit>
+        + getActiveClientDeposits(clientId : int) : List<ClientDeposit>
+        - validateDeposit(deposit : Deposit) : void
+        - validateClient(client : Client) : void
     }
 
     class SearchFilterService {
-        - logger : AppLogger
-        --
-        + sort(deposits, field: SortField, asc: boolean) : List<Deposit>
-        + filterByType(deposits, type: DepositType) : List<Deposit>
-        + filterByCurrency(deposits, currency: String) : List<Deposit>
-        + filterByBankId(deposits, bankId: int) : List<Deposit>
+        ..
+        + sort(deposits, field : SortField, ascending : boolean) : List<Deposit>
+        + filterByType(deposits, type : DepositType) : List<Deposit>
+        + filterByCurrency(deposits, currency : String) : List<Deposit>
+        + filterByBankId(deposits, bankId : int) : List<Deposit>
         + filterByWithdrawable(deposits) : List<Deposit>
         + filterByReplenishable(deposits) : List<Deposit>
         + filterByInterestRateRange(deposits, min, max) : List<Deposit>
         + filterByMinAmountRange(deposits, min, max) : List<Deposit>
         + filterByTermMonthsRange(deposits, min, max) : List<Deposit>
-        + applyFilters(deposits, filter: DepositFilter) : List<Deposit>
-    }
-
-    class DepositFilter {
-        - type : DepositType
-        - currency : String
-        - bankId : Integer
-        - canWithdrawEarly : Boolean
-        - canReplenish : Boolean
-        - minInterestRate : Double
-        - maxInterestRate : Double
-        - minMinAmount : Double
-        - maxMinAmount : Double
-        - minTermMonths : Integer
-        - maxTermMonths : Integer
-        --
-        + {static} builder() : Builder
-        + getType() : DepositType
-        + getCurrency() : String
-        + getCanWithdrawEarly() : Boolean
-        + getCanReplenish() : Boolean
-    }
-
-    class "DepositFilter.Builder" as Builder {
-        + type(type) : Builder
-        + currency(c) : Builder
-        + bankId(id) : Builder
-        + canWithdrawEarly(v) : Builder
-        + canReplenish(v) : Builder
-        + interestRateRange(min, max) : Builder
-        + minAmountRange(min, max) : Builder
-        + termMonthsRange(min, max) : Builder
-        + build() : DepositFilter
+        + applyFilters(deposits, filter : DepositFilter) : List<Deposit>
+        - validateRange(min, max, label) : void
     }
 
     enum SortField <<SearchFilterService>> {
@@ -298,39 +314,80 @@ package "ua.lpnu.deposits.service" #e8f5e9 {
         TERM_MONTHS
     }
 
-    BankService    --> BankRepository
-    BankService    --> DepositRepository
-    DepositService --> DepositRepository
-    DepositService --> ClientRepository
-    DepositService --> ClientDepositRepository
-    SearchFilterService ..> DepositFilter  : uses
-    SearchFilterService ..> SortField      : uses
-    DepositFilter   +-- Builder
+    class DepositFilter {
+        - type             : DepositType
+        - currency         : String
+        - bankId           : Integer
+        - canWithdrawEarly : Boolean
+        - canReplenish     : Boolean
+        - minInterestRate  : Double
+        - maxInterestRate  : Double
+        - minMinAmount     : Double
+        - maxMinAmount     : Double
+        - minTermMonths    : Integer
+        - maxTermMonths    : Integer
+        ..
+        + {static} builder() : Builder
+        + getType() : DepositType
+        + getCurrency() : String
+        + getBankId() : Integer
+        + getCanWithdrawEarly() : Boolean
+        + getCanReplenish() : Boolean
+        + getMinInterestRate() : Double
+        + getMaxInterestRate() : Double
+        + getMinMinAmount() : Double
+        + getMaxMinAmount() : Double
+        + getMinTermMonths() : Integer
+        + getMaxTermMonths() : Integer
+    }
+
+    class "DepositFilter.Builder" as Builder {
+        + type(type : DepositType) : Builder
+        + currency(c : String) : Builder
+        + bankId(id : int) : Builder
+        + canWithdrawEarly(val : boolean) : Builder
+        + canReplenish(val : boolean) : Builder
+        + interestRateRange(min, max : double) : Builder
+        + minAmountRange(min, max : double) : Builder
+        + termMonthsRange(min, max : int) : Builder
+        + build() : DepositFilter
+    }
+
+    DepositFilter     +--  Builder
+    SearchFilterService ..> DepositFilter : uses
+    SearchFilterService ..> SortField     : uses
+
+    BankService    -->  BankRepository
+    BankService    -->  DepositRepository
+    DepositService -->  DepositRepository
+    DepositService -->  ClientRepository
+    DepositService -->  ClientDepositRepository
 }
 
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
 '  UTIL
-' ═══════════════════════════════════════════════════════
+' ═══════════════════════════════════════════════════════════════════
 package "ua.lpnu.deposits.util" #fce4ec {
 
     class DatabaseConnection <<Singleton>> {
-        - {static} instance : DatabaseConnection
-        - connection : Connection
-        --
+        - {static} instance  : DatabaseConnection
+        - connection         : Connection
+        ..
         + {static} getInstance() : DatabaseConnection
         + getConnection() : Connection
         + {static} closeInstance() : void
-        - applySchema() : void
+        - ensureDataDirectory() : void
         - enableForeignKeys() : void
+        - applySchema() : void
     }
 
     class AppContext <<Singleton>> {
-        - {static} instance : AppContext
-        - bankService : BankService
-        - depositService : DepositService
-        - searchFilterService : SearchFilterService
-        - userRepository : UserRepository
-        --
+        - {static} instance      : AppContext
+        - bankService            : BankService
+        - depositService         : DepositService
+        - searchFilterService    : SearchFilterService
+        - userRepository         : UserRepository
+        ..
         + {static} initialize() : void
         + {static} getInstance() : AppContext
         + getBankService() : BankService
@@ -341,31 +398,42 @@ package "ua.lpnu.deposits.util" #fce4ec {
 
     class AppLogger {
         - logger : Logger
-        --
-        + {static} getLogger(clazz: Class) : AppLogger
-        + debug(msg, args...) : void
-        + info(msg, args...) : void
-        + warn(msg, args...) : void
-        + error(msg: String, cause: Throwable) : void
-        + error(msg: String) : void
+        ..
+        + {static} getLogger(clazz : Class<?>) : AppLogger
+        + debug(msg : String, args : Object...) : void
+        + info(msg : String, args : Object...) : void
+        + warn(msg : String, args : Object...) : void
+        + error(msg : String, cause : Throwable) : void
+        + error(msg : String) : void
     }
 
     class EmailSender <<Singleton>> {
         - {static} instance : EmailSender
-        --
+        - smtpHost  : String
+        - smtpPort  : String
+        - username  : String
+        - password  : String
+        - from      : String
+        - to        : String
+        - starttls  : boolean
+        - enabled   : boolean
+        ..
         + {static} getInstance() : EmailSender
-        + sendErrorEmail(msg: String, cause: Throwable) : void
+        + sendErrorEmail(message : String, cause : Throwable) : void
+        - buildSession() : Session
+        - buildBody(message, cause) : String
+        - loadConfig() : Properties
     }
 
     class PasswordUtil <<utility>> {
-        + {static} hash(password: String) : String
-        + {static} verify(plainText, hash: String) : boolean
+        + {static} hash(password : String) : String
+        + {static} verify(plainText : String, storedHash : String) : boolean
     }
 
     class UserSession <<utility>> {
         - {static} currentUser : String
-        --
-        + {static} login(username: String) : void
+        ..
+        + {static} login(username : String) : void
         + {static} logout() : void
         + {static} getCurrentUser() : String
         + {static} isLoggedIn() : boolean
@@ -373,148 +441,26 @@ package "ua.lpnu.deposits.util" #fce4ec {
 
     class DataSeeder <<utility>> {
         - {static} log : AppLogger
-        --
+        ..
         + {static} seedIfEmpty() : void
-        - {static} seedBanks(conn: Connection) : void
-        - {static} seedDeposits(conn: Connection) : void
-        - {static} seedClients(conn: Connection) : void
+        - {static} seedBanks(conn : Connection) : void
+        - {static} seedDeposits(conn : Connection) : void
+        - {static} seedClients(conn : Connection) : void
     }
 
-    AppContext   --> BankService
-    AppContext   --> DepositService
-    AppContext   --> SearchFilterService
-    AppContext   --> UserRepository
-    AppContext   ..> DataSeeder          : calls seedIfEmpty()
-    AppLogger    --> EmailSender         : on error
-    DataSeeder   --> DatabaseConnection
+    AppContext  -->  BankService
+    AppContext  -->  DepositService
+    AppContext  -->  SearchFilterService
+    AppContext  -->  UserRepository
+    AppContext  ..>  DataSeeder         : calls seedIfEmpty()
+    AppLogger   -->  EmailSender        : on error()
+    DataSeeder  -->  DatabaseConnection
 
-    JdbcBankRepository          --> DatabaseConnection
-    JdbcDepositRepository       --> DatabaseConnection
-    JdbcClientRepository        --> DatabaseConnection
-    JdbcClientDepositRepository --> DatabaseConnection
-    JdbcUserRepository          --> DatabaseConnection
-}
-
-' ═══════════════════════════════════════════════════════
-'  UI
-' ═══════════════════════════════════════════════════════
-package "ua.lpnu.deposits.ui" #f3e5f5 {
-
-    class LoginController {
-        - usernameField : TextField
-        - passwordField : PasswordField
-        - errorLabel : Label
-        --
-        + initialize() : void
-        - onLogin() : void
-    }
-
-    class MainController {
-        - contentPane : StackPane
-        - navDashboard : Button
-        - navDeposits : Button
-        - navBanks : Button
-        - navClients : Button
-        - navSearch : Button
-        --
-        + initialize() : void
-        - showPane(index: int) : void
-        - onLogout() : void
-    }
-
-    class DashboardController {
-        - depositCountLabel : Label
-        - avgRateLabel : Label
-        - bankCountLabel : Label
-        - maxRateLabel : Label
-        --
-        + initialize() : void
-        + loadStats() : void
-    }
-
-    class BankListController {
-        - bankTable : TableView<Bank>
-        - searchField : TextField
-        --
-        + initialize() : void
-        - loadBanks() : void
-        - onAdd() : void
-        - onEdit() : void
-        - onDelete() : void
-        - onSearch() : void
-        - showBankDialog(bank: Bank) : Optional<Bank>
-    }
-
-    class DepositListController {
-        - depositTable : TableView<Deposit>
-        --
-        + initialize() : void
-        + loadDeposits() : void
-        - onAdd() : void
-        - onEdit() : void
-        - onDelete() : void
-        - openForm(deposit: Deposit) : void
-    }
-
-    class DepositFormController {
-        - nameField : TextField
-        - bankComboBox : ComboBox<Bank>
-        - typeComboBox : ComboBox<String>
-        --
-        + initialize() : void
-        + setDepositToEdit(deposit: Deposit) : void
-        + setOnSaveCallback(cb: Runnable) : void
-        - onSave() : void
-        - onCancel() : void
-    }
-
-    class ClientListController {
-        - clientTable : TableView<Client>
-        - searchField : TextField
-        --
-        + initialize() : void
-        - loadClients() : void
-        - onAdd() : void
-        - onEdit() : void
-        - onDelete() : void
-        - onSearch() : void
-        - showClientDialog(client: Client) : Optional<Client>
-    }
-
-    class SearchFilterController {
-        - typeFilterCombo : ComboBox<String>
-        - sortFieldCombo : ComboBox<String>
-        - resultsTable : TableView<Deposit>
-        --
-        + initialize() : void
-        - onApply() : void
-        - onReset() : void
-        - buildFilter() : DepositFilter
-        - selectedSortField() : SortField
-    }
-
-    class AlertUtil <<utility>> {
-        + {static} showError(title, msg: String) : void
-        + {static} showConfirm(title, msg: String) : boolean
-    }
-
-    LoginController       --> UserRepository
-    LoginController       --> UserSession
-    LoginController       ..> PasswordUtil          : verifies
-    MainController        --> DashboardController   : refreshes
-    DashboardController   --> DepositService
-    DashboardController   --> BankService
-    BankListController    --> BankService
-    DepositListController --> DepositService
-    DepositListController --> BankService
-    DepositListController --> DepositFormController : opens
-    DepositFormController --> DepositService
-    DepositFormController --> BankService
-    ClientListController  --> DepositService
-    SearchFilterController --> DepositService
-    SearchFilterController --> BankService
-    SearchFilterController --> SearchFilterService
-    SearchFilterController ..> DepositFilter        : builds
+    JdbcBankRepository          -->  DatabaseConnection
+    JdbcDepositRepository       -->  DatabaseConnection
+    JdbcClientRepository        -->  DatabaseConnection
+    JdbcClientDepositRepository -->  DatabaseConnection
+    JdbcUserRepository          -->  DatabaseConnection
 }
 
 @enduml
