@@ -10,21 +10,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
  * Singleton that sends SMTP email notifications for critical application errors.
- * <p>
- * SMTP host/port are read from {@code email.properties} on the classpath.
- * Credentials (username, password, from, to) are read from the {@code .env} file
- * in the working directory, so they are never stored in the source tree.
- * <p>
+ * Configuration is loaded from {@code email.properties} on the classpath.
  * If the configuration is absent or incomplete, email sending is silently disabled —
  * the application continues to run normally.
  */
@@ -32,7 +22,6 @@ public class EmailSender {
 
     private static final Logger LOGGER = LogManager.getLogger(EmailSender.class);
     private static final String CONFIG_RESOURCE = "/email.properties";
-    private static final String DOT_ENV_FILE    = ".env";
 
     private static volatile EmailSender instance;
 
@@ -47,25 +36,15 @@ public class EmailSender {
     private final boolean enabled;
 
     private EmailSender() {
-        Properties cfg = loadConfig();          // email.properties  — SMTP host/port
-        Map<String, String> env = loadDotEnv(); // .env              — credentials
-
-        // .env values take priority; email.properties is the fallback
-        this.smtpHost = env.getOrDefault("MAIL_SMTP_HOST",
-                        cfg.getProperty("mail.smtp.host", "")).strip();
-        this.smtpPort = env.getOrDefault("MAIL_SMTP_PORT",
-                        cfg.getProperty("mail.smtp.port", "587")).strip();
-        this.username = env.getOrDefault("MAIL_USERNAME",
-                        cfg.getProperty("mail.username", "")).strip();
-        this.password = env.getOrDefault("MAIL_PASSWORD",
-                        cfg.getProperty("mail.password", "")).strip();
-        this.from     = env.getOrDefault("MAIL_FROM",
-                        cfg.getProperty("mail.from", "")).strip();
-        this.to       = env.getOrDefault("MAIL_TO",
-                        cfg.getProperty("mail.to", "")).strip();
+        Properties cfg = loadConfig();
+        this.smtpHost = cfg.getProperty("mail.smtp.host", "").strip();
+        this.smtpPort = cfg.getProperty("mail.smtp.port", "587").strip();
+        this.username = cfg.getProperty("mail.username", "").strip();
+        this.password = cfg.getProperty("mail.password", "").strip();
+        this.from     = cfg.getProperty("mail.from", "").strip();
+        this.to       = cfg.getProperty("mail.to", "").strip();
         this.starttls = Boolean.parseBoolean(
-                        env.getOrDefault("MAIL_STARTTLS",
-                        cfg.getProperty("mail.smtp.starttls.enable", "true")).strip());
+                cfg.getProperty("mail.smtp.starttls.enable", "true").strip());
 
         this.enabled = !smtpHost.isEmpty() && !username.isEmpty()
                 && !password.isEmpty() && !to.isEmpty();
@@ -164,36 +143,4 @@ public class EmailSender {
         return props;
     }
 
-    /**
-     * Reads key=value pairs from the {@code .env} file in the working directory.
-     * Lines starting with {@code #} and blank lines are ignored.
-     * Returns an empty map if the file does not exist.
-     *
-     * @return map of environment variable names to their values
-     */
-    private Map<String, String> loadDotEnv() {
-        Map<String, String> result = new HashMap<>();
-        Path path = Paths.get(DOT_ENV_FILE);
-        if (!Files.exists(path)) {
-            LOGGER.warn("EmailSender: .env file not found — credentials must be in email.properties");
-            return result;
-        }
-        try {
-            Files.lines(path, StandardCharsets.UTF_8)
-                    .map(String::strip)
-                    .filter(line -> !line.isEmpty() && !line.startsWith("#"))
-                    .forEach(line -> {
-                        int eq = line.indexOf('=');
-                        if (eq > 0) {
-                            String key = line.substring(0, eq).strip();
-                            String val = line.substring(eq + 1).strip();
-                            result.put(key, val);
-                        }
-                    });
-            LOGGER.debug("EmailSender: loaded {} entries from .env", result.size());
-        } catch (IOException e) {
-            LOGGER.warn("EmailSender: failed to read .env: {}", e.getMessage());
-        }
-        return result;
-    }
 }
