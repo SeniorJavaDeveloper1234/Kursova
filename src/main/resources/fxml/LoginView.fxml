@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ua.lpnu.deposits.ui.LoginController"
+           styleClass="login-root">
+
+    <VBox styleClass="login-card" alignment="TOP_CENTER" maxWidth="400" maxHeight="520">
+        <StackPane.margin>
+            <Insets/>
+        </StackPane.margin>
+
+        <!-- Logo -->
+        <Label text="🏦" styleClass="login-logo" alignment="CENTER"/>
+
+        <!-- Title -->
+        <Label text="Депозитний Помічник" styleClass="login-title" maxWidth="Infinity"/>
+
+        <!-- Subtitle -->
+        <Label text="Система обліку банківських депозитів"
+               styleClass="login-subtitle" maxWidth="Infinity"/>
+
+        <!-- Divider -->
+        <Region style="-fx-pref-height: 20;"/>
+
+        <!-- Username -->
+        <Label text="Логін" styleClass="login-field-label" maxWidth="Infinity"/>
+        <Region style="-fx-pref-height: 4;"/>
+        <TextField fx:id="usernameField"
+                   promptText="Введіть логін"
+                   styleClass="login-field"
+                   maxWidth="Infinity"/>
+
+        <Region style="-fx-pref-height: 12;"/>
+
+        <!-- Password -->
+        <Label text="Пароль" styleClass="login-field-label" maxWidth="Infinity"/>
+        <Region style="-fx-pref-height: 4;"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Введіть пароль"
+                       styleClass="login-field"
+                       maxWidth="Infinity"/>
+
+        <!-- Error label -->
+        <Region style="-fx-pref-height: 10;"/>
+        <Label fx:id="errorLabel" styleClass="login-error"
+               text="" maxWidth="Infinity" wrapText="true"/>
+
+        <Region style="-fx-pref-height: 6;"/>
+
+        <!-- Login button -->
+        <Button fx:id="loginButton" text="Увійти"
+                onAction="#onLogin"
+                styleClass="login-button"
+                maxWidth="Infinity"
+                defaultButton="true"/>
+
+        <Region style="-fx-pref-height: 16;"/>
+
+        <!-- Hint -->
+        <Label text="За замовчуванням: admin / admin"
+               style="-fx-text-fill: #9ca3af; -fx-font-size: 11px;"
+               alignment="CENTER" maxWidth="Infinity"/>
+    </VBox>
+
+</StackPane>
