@@ -98,7 +98,7 @@ public class LoginController implements Initializable {
                     getClass().getResource("/css/style.css").toExternalForm());
 
             Stage stage = new Stage();
-            stage.setTitle("Депозитний Помічник");
+            stage.setTitle("Скарбниця");
             stage.setScene(scene);
             stage.setMinWidth(960);
             stage.setMinHeight(640);

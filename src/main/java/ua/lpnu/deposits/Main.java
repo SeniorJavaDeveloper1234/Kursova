@@ -32,7 +32,7 @@ public class Main extends Application {
         scene.getStylesheets().add(
                 getClass().getResource("/css/style.css").toExternalForm());
 
-        primaryStage.setTitle("Депозитний Помічник — Вхід");
+        primaryStage.setTitle("Скарбниця — Вхід");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

@@ -17,7 +17,7 @@
         <Label text="🏦" styleClass="login-logo" alignment="CENTER"/>
 
         <!-- Title -->
-        <Label text="Депозитний Помічник" styleClass="login-title" maxWidth="Infinity"/>
+        <Label text="Скарбниця" styleClass="login-title" maxWidth="Infinity"/>
 
         <!-- Subtitle -->
         <Label text="Система обліку банківських депозитів"
