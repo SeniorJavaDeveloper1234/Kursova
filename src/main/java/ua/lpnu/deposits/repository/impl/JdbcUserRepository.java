@@ -55,8 +55,8 @@ public class JdbcUserRepository implements UserRepository {
         try (Statement st = conn().createStatement();
              ResultSet rs = st.executeQuery(countSql)) {
             if (rs.next() && rs.getInt(1) == 0) {
-                User admin = new User(0, "admin", PasswordUtil.hash("admin"), "ADMIN");
-                save(admin);
+                save(new User(0, "admin", PasswordUtil.hash("admin"), "ADMIN"));
+                save(new User(0, "user",  PasswordUtil.hash("user"),  "USER"));
             }
         }
     }

@@ -65,8 +65,11 @@ public class LoginController implements Initializable {
         try {
             boolean ok = userRepository.authenticate(username, password);
             if (ok) {
-                UserSession.login(username);
-                logger.info("User '{}' logged in", username);
+                String role = userRepository.findByUsername(username)
+                        .map(u -> u.getRole())
+                        .orElse("USER");
+                UserSession.login(username, role);
+                logger.info("User '{}' logged in with role '{}'", username, role);
                 openMainWindow();
             } else {
                 logger.warn("Failed login attempt for username '{}'", username);

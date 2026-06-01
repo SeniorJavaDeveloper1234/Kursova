@@ -12,6 +12,7 @@ import ua.lpnu.deposits.model.Client;
 import ua.lpnu.deposits.service.DepositService;
 import ua.lpnu.deposits.util.AppContext;
 import ua.lpnu.deposits.util.AppLogger;
+import ua.lpnu.deposits.util.UserSession;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,6 +28,7 @@ public class ClientListController implements Initializable {
 
     private static final AppLogger logger = AppLogger.getLogger(ClientListController.class);
 
+    @FXML private Button addButton;
     @FXML private Button editButton;
     @FXML private Button deleteButton;
     @FXML private TextField searchField;
@@ -45,6 +47,7 @@ public class ClientListController implements Initializable {
         setupColumns();
         setupSelectionBinding();
         loadClients();
+        applyRoleRestrictions();
     }
 
     private void setupColumns() {
@@ -71,6 +74,17 @@ public class ClientListController implements Initializable {
                     editButton.setDisable(sel == null);
                     deleteButton.setDisable(sel == null);
                 });
+    }
+
+    private void applyRoleRestrictions() {
+        if (!UserSession.isAdmin()) {
+            addButton.setVisible(false);
+            addButton.setManaged(false);
+            editButton.setVisible(false);
+            editButton.setManaged(false);
+            deleteButton.setVisible(false);
+            deleteButton.setManaged(false);
+        }
     }
 
     private void loadClients() {

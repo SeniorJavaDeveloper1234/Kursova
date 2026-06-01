@@ -52,6 +52,13 @@ public class MainController implements Initializable {
         sidebarUserLabel.setText(displayUser);
         topbarUserChip.setText("👤  " + displayUser);
 
+        if (!UserSession.isAdmin()) {
+            navBanks.setVisible(false);
+            navBanks.setManaged(false);
+            navClients.setVisible(false);
+            navClients.setManaged(false);
+        }
+
         showPane(0);
     }
 

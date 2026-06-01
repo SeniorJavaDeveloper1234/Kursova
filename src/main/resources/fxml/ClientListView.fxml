@@ -12,7 +12,7 @@
     <!-- Action toolbar -->
     <HBox styleClass="content-toolbar" alignment="CENTER_LEFT" spacing="8"
           style="-fx-background-color: white; -fx-padding: 10 16; -fx-border-color: transparent transparent #e2e8f0 transparent; -fx-border-width: 0 0 1 0;">
-        <Button text="➕  Додати клієнта" onAction="#onAdd"    styleClass="primary-button"/>
+        <Button fx:id="addButton" text="➕  Додати клієнта" onAction="#onAdd" styleClass="primary-button"/>
         <Button fx:id="editButton"         text="✏  Редагувати" onAction="#onEdit"   disable="true"/>
         <Button fx:id="deleteButton"       text="🗑  Видалити"   onAction="#onDelete" disable="true"
                 styleClass="danger-button"/>

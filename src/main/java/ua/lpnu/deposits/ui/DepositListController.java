@@ -17,6 +17,7 @@ import ua.lpnu.deposits.service.BankService;
 import ua.lpnu.deposits.service.DepositService;
 import ua.lpnu.deposits.util.AppContext;
 import ua.lpnu.deposits.util.AppLogger;
+import ua.lpnu.deposits.util.UserSession;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ public class DepositListController implements Initializable {
 
     private static final AppLogger logger = AppLogger.getLogger(DepositListController.class);
 
+    @FXML private Button addButton;
     @FXML private Button editButton;
     @FXML private Button deleteButton;
     @FXML private TableView<Deposit>           depositTable;
@@ -57,6 +59,7 @@ public class DepositListController implements Initializable {
         setupSelectionBinding();
         loadBankNames();
         loadDeposits();
+        applyRoleRestrictions();
     }
 
     private void setupColumns() {
@@ -130,6 +133,17 @@ public class DepositListController implements Initializable {
                     editButton.setDisable(sel == null);
                     deleteButton.setDisable(sel == null);
                 });
+    }
+
+    private void applyRoleRestrictions() {
+        if (!UserSession.isAdmin()) {
+            addButton.setVisible(false);
+            addButton.setManaged(false);
+            editButton.setVisible(false);
+            editButton.setManaged(false);
+            deleteButton.setVisible(false);
+            deleteButton.setManaged(false);
+        }
     }
 
     private void loadBankNames() {
