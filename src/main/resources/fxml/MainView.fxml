@@ -14,7 +14,7 @@
             <!-- Header / Logo -->
             <VBox styleClass="sidebar-header" alignment="CENTER" fillWidth="true">
                 <Label text="🏦" styleClass="sidebar-logo"/>
-                <Label text="Скарбниця" styleClass="sidebar-app-name"
+                <Label text="Депозитний Помічник" styleClass="sidebar-app-name"
                        wrapText="true"/>
                 <Label text="Облік вкладів" styleClass="sidebar-app-subtitle"/>
             </VBox>

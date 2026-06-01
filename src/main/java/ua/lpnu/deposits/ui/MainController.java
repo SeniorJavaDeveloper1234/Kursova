@@ -94,7 +94,7 @@ public class MainController implements Initializable {
                     getClass().getResource("/css/style.css").toExternalForm());
 
             Stage loginStage = new Stage();
-            loginStage.setTitle("Скарбниця — Вхід");
+            loginStage.setTitle("Депозитний Помічник — Вхід");
             loginStage.setScene(scene);
             loginStage.setResizable(false);
             loginStage.show();
