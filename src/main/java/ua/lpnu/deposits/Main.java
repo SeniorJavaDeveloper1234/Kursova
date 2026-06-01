@@ -15,6 +15,9 @@ public class Main extends Application {
 
     private static final AppLogger logger = AppLogger.getLogger(Main.class);
 
+    /** Creates a new {@code Main} application instance (called by the JavaFX runtime). */
+    public Main() {}
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         logger.info("Starting Bank Deposits application");
@@ -40,7 +43,11 @@ public class Main extends Application {
         logger.info("Login screen displayed");
     }
 
-    /** @param args command-line arguments (not used) */
+    /**
+     * Application entry point.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         launch(args);
     }

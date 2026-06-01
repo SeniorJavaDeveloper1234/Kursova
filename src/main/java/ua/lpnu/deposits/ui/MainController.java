@@ -39,6 +39,9 @@ public class MainController implements Initializable {
 
     @FXML private DashboardController dashboardRootController;
 
+    /** Creates a new {@code MainController} (instantiated by the JavaFX FXML loader). */
+    public MainController() {}
+
     private Button[] navButtons;
     private static final String[] PAGE_TITLES =
             {"Головна панель", "Депозити", "Банки", "Клієнти", "Пошук та фільтр"};

@@ -25,15 +25,31 @@ public class User {
         this.role         = role;
     }
 
-    /** @return database primary key */
-    public int getId()           { return id; }
+    /**
+     * Returns the database primary key.
+     *
+     * @return the primary key
+     */
+    public int getId() { return id; }
 
-    /** @return login name */
-    public String getUsername()  { return username; }
+    /**
+     * Returns the login name.
+     *
+     * @return the username
+     */
+    public String getUsername() { return username; }
 
-    /** @return SHA-256 hex digest of the password */
+    /**
+     * Returns the SHA-256 hex digest of the password.
+     *
+     * @return the password hash
+     */
     public String getPasswordHash() { return passwordHash; }
 
-    /** @return user role */
-    public String getRole()      { return role; }
+    /**
+     * Returns the user role.
+     *
+     * @return the role (e.g. "ADMIN", "USER")
+     */
+    public String getRole() { return role; }
 }

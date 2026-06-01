@@ -36,47 +36,83 @@ public class Client {
         this(0, firstName, lastName, email);
     }
 
-    /** @return the client's database id */
+    /**
+     * Returns the client's database id.
+     *
+     * @return the database id
+     */
     public int getId() {
         return id;
     }
 
-    /** @param id the database id to set */
+    /**
+     * Sets the client's database id.
+     *
+     * @param id the database id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /** @return the client's first name */
+    /**
+     * Returns the client's first name.
+     *
+     * @return the first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
-    /** @param firstName the first name to set */
+    /**
+     * Sets the client's first name.
+     *
+     * @param firstName the first name to set
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /** @return the client's last name */
+    /**
+     * Returns the client's last name.
+     *
+     * @return the last name
+     */
     public String getLastName() {
         return lastName;
     }
 
-    /** @param lastName the last name to set */
+    /**
+     * Sets the client's last name.
+     *
+     * @param lastName the last name to set
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    /** @return the client's full name */
+    /**
+     * Returns the client's full name (first + last).
+     *
+     * @return the full name
+     */
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-    /** @return the client's email address */
+    /**
+     * Returns the client's email address.
+     *
+     * @return the email address
+     */
     public String getEmail() {
         return email;
     }
 
-    /** @param email the email to set */
+    /**
+     * Sets the client's email address.
+     *
+     * @param email the email to set
+     */
     public void setEmail(String email) {
         this.email = email;
     }

@@ -15,6 +15,9 @@ import java.util.Optional;
  */
 public class JdbcClientDepositRepository implements ClientDepositRepository {
 
+    /** Creates a new {@code JdbcClientDepositRepository} using the shared {@link ua.lpnu.deposits.util.DatabaseConnection}. */
+    public JdbcClientDepositRepository() {}
+
     private Connection connection() throws SQLException {
         return DatabaseConnection.getInstance().getConnection();
     }

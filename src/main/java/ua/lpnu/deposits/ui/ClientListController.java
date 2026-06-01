@@ -40,6 +40,9 @@ public class ClientListController implements Initializable {
     @FXML private TableColumn<Client, String>   emailColumn;
     @FXML private Label countLabel;
 
+    /** Creates a new {@code ClientListController} (instantiated by the JavaFX FXML loader). */
+    public ClientListController() {}
+
     private final DepositService depositService = AppContext.getInstance().getDepositService();
 
     @Override

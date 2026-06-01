@@ -35,37 +35,81 @@ public class DepositFilter {
         this.maxTermMonths = b.maxTermMonths;
     }
 
-    /** @return deposit type filter, or {@code null} if not set */
+    /**
+     * Returns the deposit type filter.
+     *
+     * @return deposit type filter, or {@code null} if not set
+     */
     public DepositType getType() { return type; }
 
-    /** @return currency filter, or {@code null} if not set */
+    /**
+     * Returns the currency filter.
+     *
+     * @return currency filter, or {@code null} if not set
+     */
     public String getCurrency() { return currency; }
 
-    /** @return bank id filter, or {@code null} if not set */
+    /**
+     * Returns the bank id filter.
+     *
+     * @return bank id filter, or {@code null} if not set
+     */
     public Integer getBankId() { return bankId; }
 
-    /** @return early-withdrawal filter, or {@code null} if not set */
+    /**
+     * Returns the early-withdrawal filter.
+     *
+     * @return early-withdrawal filter, or {@code null} if not set
+     */
     public Boolean getCanWithdrawEarly() { return canWithdrawEarly; }
 
-    /** @return replenishment filter, or {@code null} if not set */
+    /**
+     * Returns the replenishment filter.
+     *
+     * @return replenishment filter, or {@code null} if not set
+     */
     public Boolean getCanReplenish() { return canReplenish; }
 
-    /** @return lower bound of interest rate range, or {@code null} if not set */
+    /**
+     * Returns the lower bound of the interest rate range filter.
+     *
+     * @return lower bound in percent, or {@code null} if not set
+     */
     public Double getMinInterestRate() { return minInterestRate; }
 
-    /** @return upper bound of interest rate range, or {@code null} if not set */
+    /**
+     * Returns the upper bound of the interest rate range filter.
+     *
+     * @return upper bound in percent, or {@code null} if not set
+     */
     public Double getMaxInterestRate() { return maxInterestRate; }
 
-    /** @return lower bound of min-amount range, or {@code null} if not set */
+    /**
+     * Returns the lower bound of the minimum-amount range filter.
+     *
+     * @return lower bound, or {@code null} if not set
+     */
     public Double getMinMinAmount() { return minMinAmount; }
 
-    /** @return upper bound of min-amount range, or {@code null} if not set */
+    /**
+     * Returns the upper bound of the minimum-amount range filter.
+     *
+     * @return upper bound, or {@code null} if not set
+     */
     public Double getMaxMinAmount() { return maxMinAmount; }
 
-    /** @return lower bound of term-months range, or {@code null} if not set */
+    /**
+     * Returns the lower bound of the term-months range filter.
+     *
+     * @return lower bound in months, or {@code null} if not set
+     */
     public Integer getMinTermMonths() { return minTermMonths; }
 
-    /** @return upper bound of term-months range, or {@code null} if not set */
+    /**
+     * Returns the upper bound of the term-months range filter.
+     *
+     * @return upper bound in months, or {@code null} if not set
+     */
     public Integer getMaxTermMonths() { return maxTermMonths; }
 
     /**
@@ -94,19 +138,47 @@ public class DepositFilter {
         private Integer minTermMonths;
         private Integer maxTermMonths;
 
-        /** @param type deposit type to filter by */
+        /** Creates a new empty {@code Builder}. */
+        public Builder() {}
+
+        /**
+         * Sets the deposit type to filter by.
+         *
+         * @param type deposit type to filter by
+         * @return this builder
+         */
         public Builder type(DepositType type) { this.type = type; return this; }
 
-        /** @param currency currency code to filter by (e.g. "UAH") */
+        /**
+         * Sets the currency code to filter by.
+         *
+         * @param currency currency code to filter by (e.g. "UAH")
+         * @return this builder
+         */
         public Builder currency(String currency) { this.currency = currency; return this; }
 
-        /** @param bankId bank id to filter by */
+        /**
+         * Sets the bank id to filter by.
+         *
+         * @param bankId bank id to filter by
+         * @return this builder
+         */
         public Builder bankId(int bankId) { this.bankId = bankId; return this; }
 
-        /** @param val if {@code true}, only deposits allowing early withdrawal are kept */
+        /**
+         * Filters by early-withdrawal permission.
+         *
+         * @param val if {@code true}, only deposits allowing early withdrawal are kept
+         * @return this builder
+         */
         public Builder canWithdrawEarly(boolean val) { this.canWithdrawEarly = val; return this; }
 
-        /** @param val if {@code true}, only deposits allowing replenishment are kept */
+        /**
+         * Filters by replenishment permission.
+         *
+         * @param val if {@code true}, only deposits allowing replenishment are kept
+         * @return this builder
+         */
         public Builder canReplenish(boolean val) { this.canReplenish = val; return this; }
 
         /**
@@ -114,6 +186,7 @@ public class DepositFilter {
          *
          * @param min lower bound (percent)
          * @param max upper bound (percent)
+         * @return this builder
          */
         public Builder interestRateRange(double min, double max) {
             this.minInterestRate = min;
@@ -126,6 +199,7 @@ public class DepositFilter {
          *
          * @param min lower bound
          * @param max upper bound
+         * @return this builder
          */
         public Builder minAmountRange(double min, double max) {
             this.minMinAmount = min;
@@ -138,6 +212,7 @@ public class DepositFilter {
          *
          * @param min lower bound
          * @param max upper bound
+         * @return this builder
          */
         public Builder termMonthsRange(int min, int max) {
             this.minTermMonths = min;
@@ -145,7 +220,11 @@ public class DepositFilter {
             return this;
         }
 
-        /** @return the constructed, immutable {@link DepositFilter} */
+        /**
+         * Builds the immutable {@link DepositFilter}.
+         *
+         * @return the constructed, immutable {@link DepositFilter}
+         */
         public DepositFilter build() { return new DepositFilter(this); }
     }
 }

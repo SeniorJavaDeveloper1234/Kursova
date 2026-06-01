@@ -49,6 +49,9 @@ public class DepositListController implements Initializable {
     @FXML private TableColumn<Deposit, Boolean> canReplenishColumn;
     @FXML private Label countLabel;
 
+    /** Creates a new {@code DepositListController} (instantiated by the JavaFX FXML loader). */
+    public DepositListController() {}
+
     private final DepositService depositService = AppContext.getInstance().getDepositService();
     private final BankService    bankService    = AppContext.getInstance().getBankService();
     private final Map<Integer, String> bankNames = new HashMap<>();

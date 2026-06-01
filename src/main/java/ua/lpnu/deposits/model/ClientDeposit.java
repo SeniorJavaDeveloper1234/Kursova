@@ -44,62 +44,110 @@ public class ClientDeposit {
         this(0, clientId, depositId, amount, null, "ACTIVE");
     }
 
-    /** @return the record's database id */
+    /**
+     * Returns the record's database id.
+     *
+     * @return the database id
+     */
     public int getId() {
         return id;
     }
 
-    /** @param id the database id to set */
+    /**
+     * Sets the record's database id.
+     *
+     * @param id the database id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /** @return the client's database id */
+    /**
+     * Returns the client's database id.
+     *
+     * @return the client id
+     */
     public int getClientId() {
         return clientId;
     }
 
-    /** @param clientId the client id to set */
+    /**
+     * Sets the client's database id.
+     *
+     * @param clientId the client id to set
+     */
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
-    /** @return the deposit product's database id */
+    /**
+     * Returns the deposit product's database id.
+     *
+     * @return the deposit product id
+     */
     public int getDepositId() {
         return depositId;
     }
 
-    /** @param depositId the deposit product id to set */
+    /**
+     * Sets the deposit product's database id.
+     *
+     * @param depositId the deposit product id to set
+     */
     public void setDepositId(int depositId) {
         this.depositId = depositId;
     }
 
-    /** @return the amount placed on this deposit */
+    /**
+     * Returns the amount placed on this deposit.
+     *
+     * @return the deposit amount
+     */
     public double getAmount() {
         return amount;
     }
 
-    /** @param amount the amount to set */
+    /**
+     * Sets the amount placed on this deposit.
+     *
+     * @param amount the amount to set
+     */
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    /** @return the ISO-8601 datetime when this deposit was opened */
+    /**
+     * Returns the ISO-8601 datetime when this deposit was opened.
+     *
+     * @return the opening datetime string
+     */
     public String getOpenedAt() {
         return openedAt;
     }
 
-    /** @param openedAt the opening datetime to set */
+    /**
+     * Sets the ISO-8601 datetime when this deposit was opened.
+     *
+     * @param openedAt the opening datetime to set
+     */
     public void setOpenedAt(String openedAt) {
         this.openedAt = openedAt;
     }
 
-    /** @return the current status of this deposit record */
+    /**
+     * Returns the current status of this deposit record.
+     *
+     * @return the status string (e.g. "ACTIVE", "CLOSED")
+     */
     public String getStatus() {
         return status;
     }
 
-    /** @param status the status to set */
+    /**
+     * Sets the current status of this deposit record.
+     *
+     * @param status the status to set
+     */
     public void setStatus(String status) {
         this.status = status;
     }

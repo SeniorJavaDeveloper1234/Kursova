@@ -32,32 +32,56 @@ public class Bank {
         this(0, name, rating);
     }
 
-    /** @return the bank's database id */
+    /**
+     * Returns the bank's database id.
+     *
+     * @return the database id
+     */
     public int getId() {
         return id;
     }
 
-    /** @param id the database id to set */
+    /**
+     * Sets the bank's database id.
+     *
+     * @param id the database id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /** @return the bank's name */
+    /**
+     * Returns the bank's name.
+     *
+     * @return the bank name
+     */
     public String getName() {
         return name;
     }
 
-    /** @param name the name to set */
+    /**
+     * Sets the bank's name.
+     *
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** @return the bank's reliability rating */
+    /**
+     * Returns the bank's reliability rating.
+     *
+     * @return the rating
+     */
     public double getRating() {
         return rating;
     }
 
-    /** @param rating the rating to set */
+    /**
+     * Sets the bank's reliability rating.
+     *
+     * @param rating the rating to set
+     */
     public void setRating(double rating) {
         this.rating = rating;
     }

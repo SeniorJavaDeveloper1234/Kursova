@@ -18,13 +18,20 @@ public class SearchFilterService {
 
     private static final AppLogger logger = AppLogger.getLogger(SearchFilterService.class);
 
+    /** Creates a new {@code SearchFilterService}. */
+    public SearchFilterService() {}
+
     /**
      * Fields that can be used as a sort key in {@link #sort}.
      */
     public enum SortField {
+        /** Sort alphabetically by deposit name. */
         NAME,
+        /** Sort by annual interest rate. */
         INTEREST_RATE,
+        /** Sort by minimum opening amount. */
         MIN_AMOUNT,
+        /** Sort by deposit term in months. */
         TERM_MONTHS
     }
 

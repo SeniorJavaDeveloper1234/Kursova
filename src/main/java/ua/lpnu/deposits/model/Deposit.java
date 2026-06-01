@@ -93,112 +93,200 @@ public abstract class Deposit {
         return principal + calculateProfit(principal, months);
     }
 
-    /** @return the deposit's database id */
+    /**
+     * Returns the deposit's database id.
+     *
+     * @return the database id
+     */
     public int getId() {
         return id;
     }
 
-    /** @param id the database id to set */
+    /**
+     * Sets the deposit's database id.
+     *
+     * @param id the database id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /** @return the id of the bank that offers this deposit */
+    /**
+     * Returns the id of the bank that offers this deposit.
+     *
+     * @return the bank id
+     */
     public int getBankId() {
         return bankId;
     }
 
-    /** @param bankId the bank id to set */
+    /**
+     * Sets the id of the bank that offers this deposit.
+     *
+     * @param bankId the bank id to set
+     */
     public void setBankId(int bankId) {
         this.bankId = bankId;
     }
 
-    /** @return the deposit product name */
+    /**
+     * Returns the deposit product name.
+     *
+     * @return the product name
+     */
     public String getName() {
         return name;
     }
 
-    /** @param name the product name to set */
+    /**
+     * Sets the deposit product name.
+     *
+     * @param name the product name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** @return the deposit type */
+    /**
+     * Returns the deposit type.
+     *
+     * @return the deposit type
+     */
     public DepositType getType() {
         return type;
     }
 
-    /** @param type the deposit type to set */
+    /**
+     * Sets the deposit type.
+     *
+     * @param type the deposit type to set
+     */
     public void setType(DepositType type) {
         this.type = type;
     }
 
-    /** @return the currency code */
+    /**
+     * Returns the currency code.
+     *
+     * @return the currency code (e.g. "UAH")
+     */
     public String getCurrency() {
         return currency;
     }
 
-    /** @param currency the currency code to set */
+    /**
+     * Sets the currency code.
+     *
+     * @param currency the currency code to set
+     */
     public void setCurrency(String currency) {
         this.currency = currency;
     }
 
-    /** @return the minimum opening amount */
+    /**
+     * Returns the minimum opening amount.
+     *
+     * @return the minimum amount
+     */
     public double getMinAmount() {
         return minAmount;
     }
 
-    /** @param minAmount the minimum amount to set */
+    /**
+     * Sets the minimum opening amount.
+     *
+     * @param minAmount the minimum amount to set
+     */
     public void setMinAmount(double minAmount) {
         this.minAmount = minAmount;
     }
 
-    /** @return the annual interest rate in percent */
+    /**
+     * Returns the annual interest rate in percent.
+     *
+     * @return the annual interest rate
+     */
     public double getInterestRate() {
         return interestRate;
     }
 
-    /** @param interestRate the annual interest rate to set */
+    /**
+     * Sets the annual interest rate in percent.
+     *
+     * @param interestRate the annual interest rate to set
+     */
     public void setInterestRate(double interestRate) {
         this.interestRate = interestRate;
     }
 
-    /** @return the deposit term in months */
+    /**
+     * Returns the deposit term in months.
+     *
+     * @return the term in months
+     */
     public int getTermMonths() {
         return termMonths;
     }
 
-    /** @param termMonths the term in months to set */
+    /**
+     * Sets the deposit term in months.
+     *
+     * @param termMonths the term in months to set
+     */
     public void setTermMonths(int termMonths) {
         this.termMonths = termMonths;
     }
 
-    /** @return true if early withdrawal is permitted */
+    /**
+     * Returns whether early withdrawal is permitted.
+     *
+     * @return {@code true} if early withdrawal is permitted
+     */
     public boolean isCanWithdrawEarly() {
         return canWithdrawEarly;
     }
 
-    /** @param canWithdrawEarly whether early withdrawal is permitted */
+    /**
+     * Sets whether early withdrawal is permitted.
+     *
+     * @param canWithdrawEarly {@code true} to permit early withdrawal
+     */
     public void setCanWithdrawEarly(boolean canWithdrawEarly) {
         this.canWithdrawEarly = canWithdrawEarly;
     }
 
-    /** @return true if top-up replenishment is permitted */
+    /**
+     * Returns whether top-up replenishment is permitted.
+     *
+     * @return {@code true} if replenishment is permitted
+     */
     public boolean isCanReplenish() {
         return canReplenish;
     }
 
-    /** @param canReplenish whether replenishment is permitted */
+    /**
+     * Sets whether top-up replenishment is permitted.
+     *
+     * @param canReplenish {@code true} to permit replenishment
+     */
     public void setCanReplenish(boolean canReplenish) {
         this.canReplenish = canReplenish;
     }
 
-    /** @return the early-withdrawal penalty rate in percent */
+    /**
+     * Returns the early-withdrawal penalty rate in percent.
+     *
+     * @return the penalty rate
+     */
     public double getPenaltyRate() {
         return penaltyRate;
     }
 
-    /** @param penaltyRate the penalty rate to set */
+    /**
+     * Sets the early-withdrawal penalty rate in percent.
+     *
+     * @param penaltyRate the penalty rate to set
+     */
     public void setPenaltyRate(double penaltyRate) {
         this.penaltyRate = penaltyRate;
     }

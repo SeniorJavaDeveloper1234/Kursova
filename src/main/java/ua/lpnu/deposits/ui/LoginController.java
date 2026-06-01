@@ -28,6 +28,9 @@ public class LoginController implements Initializable {
     @FXML private Label         errorLabel;
     @FXML private Button        loginButton;
 
+    /** Creates a new {@code LoginController} (instantiated by the JavaFX FXML loader). */
+    public LoginController() {}
+
     private UserRepository userRepository;
 
     @Override

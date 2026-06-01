@@ -39,6 +39,9 @@ public class BankListController implements Initializable {
     @FXML private TableColumn<Bank, Double>   ratingColumn;
     @FXML private Label countLabel;
 
+    /** Creates a new {@code BankListController} (instantiated by the JavaFX FXML loader). */
+    public BankListController() {}
+
     private final BankService bankService = AppContext.getInstance().getBankService();
 
     @Override

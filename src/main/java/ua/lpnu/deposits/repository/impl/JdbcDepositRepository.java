@@ -17,6 +17,9 @@ import java.util.Optional;
  */
 public class JdbcDepositRepository implements DepositRepository {
 
+    /** Creates a new {@code JdbcDepositRepository} using the shared {@link ua.lpnu.deposits.util.DatabaseConnection}. */
+    public JdbcDepositRepository() {}
+
     private static final String SELECT_COLUMNS =
             "SELECT id, bank_id, name, type, currency, min_amount, interest_rate,"
             + " term_months, can_withdraw_early, can_replenish, penalty_rate FROM deposits";

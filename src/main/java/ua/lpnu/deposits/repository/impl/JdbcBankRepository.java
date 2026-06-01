@@ -15,6 +15,9 @@ import java.util.Optional;
  */
 public class JdbcBankRepository implements BankRepository {
 
+    /** Creates a new {@code JdbcBankRepository} using the shared {@link ua.lpnu.deposits.util.DatabaseConnection}. */
+    public JdbcBankRepository() {}
+
     private Connection connection() throws SQLException {
         return DatabaseConnection.getInstance().getConnection();
     }

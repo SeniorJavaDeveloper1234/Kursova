@@ -67,15 +67,31 @@ public class AppContext {
         return instance;
     }
 
-    /** @return the bank service */
+    /**
+     * Returns the bank service.
+     *
+     * @return the bank service
+     */
     public BankService getBankService() { return bankService; }
 
-    /** @return the deposit service */
+    /**
+     * Returns the deposit service.
+     *
+     * @return the deposit service
+     */
     public DepositService getDepositService() { return depositService; }
 
-    /** @return the search-filter service */
+    /**
+     * Returns the search-filter service.
+     *
+     * @return the search-filter service
+     */
     public SearchFilterService getSearchFilterService() { return searchFilterService; }
 
-    /** @return the user repository */
+    /**
+     * Returns the user repository.
+     *
+     * @return the user repository
+     */
     public UserRepository getUserRepository() { return userRepository; }
 }

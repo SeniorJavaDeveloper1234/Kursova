@@ -37,6 +37,9 @@ public class DepositFormController implements Initializable {
     @FXML private TextField penaltyRateField;
     @FXML private Label     featuresLabel;
 
+    /** Creates a new {@code DepositFormController} (instantiated by the JavaFX FXML loader). */
+    public DepositFormController() {}
+
     private final DepositService depositService = AppContext.getInstance().getDepositService();
     private final BankService    bankService    = AppContext.getInstance().getBankService();
 

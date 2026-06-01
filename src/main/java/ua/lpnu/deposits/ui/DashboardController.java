@@ -37,6 +37,9 @@ public class DashboardController implements Initializable {
     @FXML private Label bestNameLabel;
     @FXML private Label bestDetailsLabel;
 
+    /** Creates a new {@code DashboardController} (instantiated by the JavaFX FXML loader). */
+    public DashboardController() {}
+
     private final DepositService depositService = AppContext.getInstance().getDepositService();
     private final BankService    bankService    = AppContext.getInstance().getBankService();
 

@@ -13,6 +13,8 @@ public class DataSeeder {
 
     private static final AppLogger log = AppLogger.getLogger(DataSeeder.class);
 
+    private DataSeeder() {}
+
     /**
      * Inserts banks, deposits, and clients if their respective tables are empty.
      *

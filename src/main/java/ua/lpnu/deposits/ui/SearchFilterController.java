@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Controller for the Search & Filter tab.
+ * Controller for the Search &amp; Filter tab.
  * Pulls a fresh deposit list on every search, then applies in-memory filters
  * and sorting via {@link SearchFilterService}.
  * Contains no business logic beyond composing the filter and presenting results.
@@ -59,6 +59,9 @@ public class SearchFilterController implements Initializable {
     @FXML private TableColumn<Deposit, Boolean> rWithdrawColumn;
     @FXML private TableColumn<Deposit, Boolean> rReplenishColumn;
     @FXML private Label resultCountLabel;
+
+    /** Creates a new {@code SearchFilterController} (instantiated by the JavaFX FXML loader). */
+    public SearchFilterController() {}
 
     private final DepositService      depositService      = AppContext.getInstance().getDepositService();
     private final BankService         bankService         = AppContext.getInstance().getBankService();
