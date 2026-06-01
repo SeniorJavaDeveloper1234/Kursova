@@ -50,10 +50,6 @@ public class DepositFormController implements Initializable {
         currencyField.setText("UAH");
     }
 
-    // -------------------------------------------------------------------------
-    // Public API called by DepositListController
-    // -------------------------------------------------------------------------
-
     /**
      * Pre-fills the form fields when editing an existing deposit.
      * Pass {@code null} to open an empty "Add" form.
@@ -83,7 +79,6 @@ public class DepositFormController implements Initializable {
         };
         typeComboBox.getSelectionModel().select(typeLabel);
 
-        // Select the matching bank
         bankComboBox.getItems().stream()
                 .filter(b -> b.getId() == deposit.getBankId())
                 .findFirst()
@@ -98,10 +93,6 @@ public class DepositFormController implements Initializable {
     public void setOnSaveCallback(Runnable callback) {
         this.onSaveCallback = callback;
     }
-
-    // -------------------------------------------------------------------------
-    // FXML handlers
-    // -------------------------------------------------------------------------
 
     @FXML
     private void onSave() {
@@ -131,10 +122,6 @@ public class DepositFormController implements Initializable {
     private void onCancel() {
         closeWindow();
     }
-
-    // -------------------------------------------------------------------------
-    // Initialisation helpers
-    // -------------------------------------------------------------------------
 
     private void loadBanks() {
         try {
@@ -168,23 +155,16 @@ public class DepositFormController implements Initializable {
         boolean isSavings = "Ощадний".equals(typeLabel);
         boolean isDemand  = "До запитання".equals(typeLabel);
 
-        // Термін hidden for DEMAND
         termLabel.setVisible(!isDemand);
         termMonthsField.setVisible(!isDemand);
 
-        // Штраф shown only for TERM
         penaltyLabel.setVisible(isTerm);
         penaltyRateField.setVisible(isTerm);
 
-        // Features info label
         if (isTerm)    featuresLabel.setText("Дострокове зняття: Так (з штрафом)  |  Поповнення: Ні");
         if (isSavings) featuresLabel.setText("Дострокове зняття: Ні  |  Поповнення: Так");
         if (isDemand)  featuresLabel.setText("Дострокове зняття: Так  |  Поповнення: Так");
     }
-
-    // -------------------------------------------------------------------------
-    // Validation and model construction
-    // -------------------------------------------------------------------------
 
     private boolean validate() {
         if (nameField.getText().isBlank()) {

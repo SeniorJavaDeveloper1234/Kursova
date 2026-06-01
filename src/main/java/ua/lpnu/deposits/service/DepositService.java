@@ -40,10 +40,6 @@ public class DepositService {
         this.clientDepositRepository = clientDepositRepository;
     }
 
-    // -------------------------------------------------------------------------
-    // Deposit product CRUD
-    // -------------------------------------------------------------------------
-
     /**
      * Validates and persists a new deposit product.
      *
@@ -230,10 +226,6 @@ public class DepositService {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // Client CRUD
-    // -------------------------------------------------------------------------
-
     /**
      * Validates and persists a new client.
      *
@@ -358,10 +350,6 @@ public class DepositService {
             throw e;
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Client deposit business operations
-    // -------------------------------------------------------------------------
 
     /**
      * Opens a deposit for a client, enforcing the minimum amount constraint.
@@ -494,10 +482,6 @@ public class DepositService {
             throw e;
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Validation helpers
-    // -------------------------------------------------------------------------
 
     private void validateDeposit(Deposit deposit) {
         if (deposit.getName() == null || deposit.getName().isBlank()) {

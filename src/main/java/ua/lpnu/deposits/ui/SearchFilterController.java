@@ -34,7 +34,6 @@ public class SearchFilterController implements Initializable {
 
     private static final AppLogger logger = AppLogger.getLogger(SearchFilterController.class);
 
-    /* ---- filter controls ---- */
     @FXML private ComboBox<String>  typeFilterCombo;
     @FXML private TextField         currencyFilterField;
     @FXML private TextField         minRateField;
@@ -49,7 +48,6 @@ public class SearchFilterController implements Initializable {
     @FXML private RadioButton       ascRadio;
     @FXML private RadioButton       descRadio;
 
-    /* ---- results table ---- */
     @FXML private TableView<Deposit>            resultsTable;
     @FXML private TableColumn<Deposit, String>  rNameColumn;
     @FXML private TableColumn<Deposit, String>  rBankColumn;
@@ -76,10 +74,6 @@ public class SearchFilterController implements Initializable {
         setupSortToggle();
         setupResultsTable();
     }
-
-    // -------------------------------------------------------------------------
-    // FXML handlers
-    // -------------------------------------------------------------------------
 
     @FXML
     private void onApply() {
@@ -116,10 +110,6 @@ public class SearchFilterController implements Initializable {
         resultsTable.getItems().clear();
         resultCountLabel.setText("");
     }
-
-    // -------------------------------------------------------------------------
-    // Initialisation helpers
-    // -------------------------------------------------------------------------
 
     private void loadBankNames() {
         try {
@@ -199,10 +189,6 @@ public class SearchFilterController implements Initializable {
         resultsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
-    // -------------------------------------------------------------------------
-    // Filter / sort construction
-    // -------------------------------------------------------------------------
-
     private DepositFilter buildFilter() {
         DepositFilter.Builder b = DepositFilter.builder();
 
@@ -242,10 +228,6 @@ public class SearchFilterController implements Initializable {
             default           -> SortField.NAME;
         };
     }
-
-    // -------------------------------------------------------------------------
-    // Small helpers
-    // -------------------------------------------------------------------------
 
     private boolean isDouble(TextField f) {
         if (f.getText().isBlank()) return false;

@@ -47,10 +47,6 @@ public class DashboardController implements Initializable {
         loadStats();
     }
 
-    // -------------------------------------------------------------------------
-    // Public API — called by MainController to refresh on tab switch
-    // -------------------------------------------------------------------------
-
     /**
      * Re-loads all statistics from the database and refreshes the labels.
      */
@@ -59,7 +55,6 @@ public class DashboardController implements Initializable {
             List<Deposit> deposits = depositService.getAllDeposits();
             List<Bank>    banks    = bankService.getAllBanks();
 
-            // ---- stat cards ----
             int count = deposits.size();
             depositCountLabel.setText(String.valueOf(count));
             bankCountLabel.setText(String.valueOf(banks.size()));
@@ -78,7 +73,6 @@ public class DashboardController implements Initializable {
                     .orElse(0);
             avgRateLabel.setText(String.format("%.2f%%", avg));
 
-            // ---- best deposit ----
             Optional<Deposit> best = deposits.stream()
                     .max(Comparator.comparingDouble(Deposit::getInterestRate));
 
@@ -87,7 +81,6 @@ public class DashboardController implements Initializable {
                 maxRateLabel.setText(String.format("%.2f%%", max));
                 bestNameLabel.setText(d.getName());
 
-                // look up bank name
                 Map<Integer, String> bankMap = banks.stream()
                         .collect(Collectors.toMap(Bank::getId, Bank::getName));
                 String bankName = bankMap.getOrDefault(d.getBankId(), "—");

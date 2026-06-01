@@ -61,10 +61,6 @@ public final class AlertUtil {
         return result.isPresent() && result.get() == ButtonType.OK;
     }
 
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
-
     private static void applyStyle(Alert alert) {
         var url = AlertUtil.class.getResource(STYLESHEET);
         if (url != null) {

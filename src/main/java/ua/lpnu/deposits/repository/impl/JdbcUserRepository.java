@@ -61,10 +61,6 @@ public class JdbcUserRepository implements UserRepository {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // Mapping helper
-    // -------------------------------------------------------------------------
-
     private User map(ResultSet rs) throws SQLException {
         return new User(
                 rs.getInt("id"),

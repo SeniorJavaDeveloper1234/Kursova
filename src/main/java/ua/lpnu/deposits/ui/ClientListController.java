@@ -47,10 +47,6 @@ public class ClientListController implements Initializable {
         loadClients();
     }
 
-    // -------------------------------------------------------------------------
-    // Table setup
-    // -------------------------------------------------------------------------
-
     private void setupColumns() {
         idColumn.setCellValueFactory(c ->
                 new SimpleIntegerProperty(c.getValue().getId()).asObject());
@@ -77,10 +73,6 @@ public class ClientListController implements Initializable {
                 });
     }
 
-    // -------------------------------------------------------------------------
-    // Data loading
-    // -------------------------------------------------------------------------
-
     private void loadClients() {
         try {
             List<Client> clients = depositService.getAllClients();
@@ -92,10 +84,6 @@ public class ClientListController implements Initializable {
                     "Не вдалося завантажити список клієнтів:\n" + e.getMessage());
         }
     }
-
-    // -------------------------------------------------------------------------
-    // FXML handlers
-    // -------------------------------------------------------------------------
 
     @FXML
     private void onAdd() {
@@ -166,10 +154,6 @@ public class ClientListController implements Initializable {
                     "Не вдалося виконати пошук:\n" + e.getMessage());
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Inline client dialog
-    // -------------------------------------------------------------------------
 
     private Optional<Client> showClientDialog(Client clientToEdit) {
         boolean isEdit = clientToEdit != null;

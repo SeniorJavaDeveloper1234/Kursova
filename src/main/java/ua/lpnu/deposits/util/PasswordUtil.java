@@ -28,7 +28,6 @@ public final class PasswordUtil {
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            // SHA-256 is mandated by the Java SE spec — this never happens
             throw new RuntimeException("SHA-256 not available", e);
         }
     }

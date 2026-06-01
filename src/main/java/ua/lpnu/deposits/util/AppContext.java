@@ -35,9 +35,7 @@ public class AppContext {
         this.searchFilterService  = new SearchFilterService();
         this.userRepository       = userRepo;
 
-        // Seed the default admin account if the users table is empty
         userRepo.ensureDefaultAdmin();
-        // Seed banks, deposits, and clients if the tables are empty
         DataSeeder.seedIfEmpty();
     }
 

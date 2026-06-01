@@ -28,10 +28,6 @@ public class SearchFilterService {
         TERM_MONTHS
     }
 
-    // -------------------------------------------------------------------------
-    // Sorting
-    // -------------------------------------------------------------------------
-
     /**
      * Sorts a list of deposits by the given field.
      *
@@ -55,10 +51,6 @@ public class SearchFilterService {
         }
         return deposits.stream().sorted(comparator).toList();
     }
-
-    // -------------------------------------------------------------------------
-    // Single-criterion filters
-    // -------------------------------------------------------------------------
 
     /**
      * Filters deposits by type.
@@ -138,10 +130,6 @@ public class SearchFilterService {
         return result;
     }
 
-    // -------------------------------------------------------------------------
-    // Range searches
-    // -------------------------------------------------------------------------
-
     /**
      * Keeps only deposits whose annual interest rate is within {@code [min, max]}.
      *
@@ -208,10 +196,6 @@ public class SearchFilterService {
         return result;
     }
 
-    // -------------------------------------------------------------------------
-    // Combined filter
-    // -------------------------------------------------------------------------
-
     /**
      * Applies all non-null criteria in {@code filter} sequentially.
      * Criteria are ANDed: each one narrows the previous result.
@@ -255,10 +239,6 @@ public class SearchFilterService {
         logger.debug("Combined filter result: {} deposit(s)", result.size());
         return result;
     }
-
-    // -------------------------------------------------------------------------
-    // Private helpers
-    // -------------------------------------------------------------------------
 
     private void validateRange(double min, double max, String label) {
         if (min > max) {

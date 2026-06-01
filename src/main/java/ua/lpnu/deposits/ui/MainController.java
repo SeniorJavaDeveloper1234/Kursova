@@ -37,7 +37,6 @@ public class MainController implements Initializable {
     @FXML private Label topbarTitle;
     @FXML private Label topbarUserChip;
 
-    // Reference to the injected dashboard controller for refresh on tab switch
     @FXML private DashboardController dashboardRootController;
 
     private Button[] navButtons;
@@ -53,13 +52,8 @@ public class MainController implements Initializable {
         sidebarUserLabel.setText(displayUser);
         topbarUserChip.setText("👤  " + displayUser);
 
-        // Show dashboard as the default pane
         showPane(0);
     }
-
-    // -------------------------------------------------------------------------
-    // Sidebar navigation handlers
-    // -------------------------------------------------------------------------
 
     /** @noinspection unused */
     @FXML private void onNavDashboard() { showPane(0); }
@@ -98,18 +92,13 @@ public class MainController implements Initializable {
             loginStage.setResizable(false);
             loginStage.show();
 
-            // Close the current main window
-            ((Stage) contentPane.getScene().getWindow()).close();
+                ((Stage) contentPane.getScene().getWindow()).close();
 
         } catch (Exception e) {
             logger.error("Failed to return to login screen", e);
             AlertUtil.showError("Помилка", "Не вдалося відкрити вікно входу:\n" + e.getMessage());
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Pane management
-    // -------------------------------------------------------------------------
 
     /**
      * Makes only the pane at {@code index} visible; hides and un-manages the rest.
@@ -129,13 +118,11 @@ public class MainController implements Initializable {
             topbarTitle.setText(PAGE_TITLES[index]);
         }
 
-        // Highlight active nav button
         for (int i = 0; i < navButtons.length; i++) {
             navButtons[i].getStyleClass().remove("nav-btn-active");
             if (i == index) navButtons[i].getStyleClass().add("nav-btn-active");
         }
 
-        // Refresh dashboard stats when switching back to it
         if (index == 0 && dashboardRootController != null) {
             dashboardRootController.loadStats();
         }

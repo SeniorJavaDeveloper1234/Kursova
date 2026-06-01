@@ -43,7 +43,6 @@ public class JdbcClientDepositRepository implements ClientDepositRepository {
                 }
             }
         }
-        // Reload to get the DB-generated opened_at timestamp
         return findById(cd.getId()).orElse(cd);
     }
 

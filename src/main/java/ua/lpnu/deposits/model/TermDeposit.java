@@ -54,7 +54,6 @@ public class TermDeposit extends Deposit {
     @Override
     public double calculateProfit(double principal, int months) {
         if (months < getTermMonths()) {
-            // early withdrawal: return simple interest minus the penalty
             double earned = principal * getInterestRate() / 100.0 * months / 12.0;
             double penalty = principal * getPenaltyRate() / 100.0;
             return Math.max(earned - penalty, 0.0);

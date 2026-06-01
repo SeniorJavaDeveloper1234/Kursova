@@ -59,10 +59,6 @@ public class DepositListController implements Initializable {
         loadDeposits();
     }
 
-    // -------------------------------------------------------------------------
-    // Table setup
-    // -------------------------------------------------------------------------
-
     private void setupColumns() {
         nameColumn.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getName()));
@@ -136,10 +132,6 @@ public class DepositListController implements Initializable {
                 });
     }
 
-    // -------------------------------------------------------------------------
-    // Data loading
-    // -------------------------------------------------------------------------
-
     private void loadBankNames() {
         try {
             bankNames.clear();
@@ -161,10 +153,6 @@ public class DepositListController implements Initializable {
                     "Не вдалося завантажити депозити:\n" + e.getMessage());
         }
     }
-
-    // -------------------------------------------------------------------------
-    // FXML handlers
-    // -------------------------------------------------------------------------
 
     @FXML
     private void onAdd() {
@@ -201,10 +189,6 @@ public class DepositListController implements Initializable {
         loadDeposits();
     }
 
-    // -------------------------------------------------------------------------
-    // Form popup
-    // -------------------------------------------------------------------------
-
     private void openForm(Deposit deposit) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -228,10 +212,6 @@ public class DepositListController implements Initializable {
             AlertUtil.showError("Помилка", "Не вдалося відкрити форму:\n" + e.getMessage());
         }
     }
-
-    // -------------------------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------------------------
 
     private String typeLabel(DepositType type) {
         return switch (type) {

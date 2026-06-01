@@ -48,10 +48,6 @@ public class BankListController implements Initializable {
         loadBanks();
     }
 
-    // -------------------------------------------------------------------------
-    // Table setup
-    // -------------------------------------------------------------------------
-
     private void setupColumns() {
         idColumn.setCellValueFactory(c ->
                 new SimpleIntegerProperty(c.getValue().getId()).asObject());
@@ -79,10 +75,6 @@ public class BankListController implements Initializable {
                 });
     }
 
-    // -------------------------------------------------------------------------
-    // Data loading
-    // -------------------------------------------------------------------------
-
     private void loadBanks() {
         try {
             List<Bank> banks = bankService.getAllBanks();
@@ -94,10 +86,6 @@ public class BankListController implements Initializable {
                     "Не вдалося завантажити список банків:\n" + e.getMessage());
         }
     }
-
-    // -------------------------------------------------------------------------
-    // FXML handlers
-    // -------------------------------------------------------------------------
 
     @FXML
     private void onAdd() {
@@ -169,10 +157,6 @@ public class BankListController implements Initializable {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // Inline bank dialog (no separate FXML — bank has only two editable fields)
-    // -------------------------------------------------------------------------
-
     private Optional<Bank> showBankDialog(Bank bankToEdit) {
         boolean isEdit = bankToEdit != null;
 
@@ -183,11 +167,9 @@ public class BankListController implements Initializable {
         ButtonType saveType = new ButtonType("Зберегти", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveType, ButtonType.CANCEL);
 
-        // Apply the application stylesheet so the dialog matches the main theme
         var css = getClass().getResource("/css/style.css");
         if (css != null) dialog.getDialogPane().getStylesheets().add(css.toExternalForm());
 
-        // Form layout
         GridPane grid = new GridPane();
         grid.setHgap(12);
         grid.setVgap(10);
@@ -208,7 +190,6 @@ public class BankListController implements Initializable {
         grid.add(ratingSpinner,              1, 1);
         dialog.getDialogPane().setContent(grid);
 
-        // Focus name field after dialog opens
         dialog.setOnShown(e -> nameField.requestFocus());
 
         dialog.setResultConverter(btn -> {
