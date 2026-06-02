@@ -45,3 +45,7 @@ docs/plantuml.jar
 
 # Mac
 .DS_Store
+
+# Claude Code
+CLAUDE.md
+.claude/

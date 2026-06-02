@@ -41,9 +41,9 @@ public class LoginController implements Initializable {
         passwordField.setOnAction(e -> onLogin());
         usernameField.setOnAction(e -> passwordField.requestFocus());
 
-        // Clear error when typing starts
-        usernameField.textProperty().addListener((o, ov, nv) -> clearError());
-        passwordField.textProperty().addListener((o, ov, nv) -> clearError());
+        // Clear error only on genuine key input, not on programmatic field resets
+        usernameField.setOnKeyTyped(e -> clearError());
+        passwordField.setOnKeyTyped(e -> clearError());
     }
 
     // -------------------------------------------------------------------------

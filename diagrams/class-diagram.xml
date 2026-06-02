@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1680" pageHeight="2200" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+    <mxCell id="11" value="📦 ua.lpnu.deposits.model" style="text;html=1;strokeColor=none;fillColor=#eeeeee;align=left;verticalAlign=top;spacingLeft=6;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1"><mxGeometry x="10" y="5" width="1640" height="28" as="geometry"/></mxCell>
+    <mxCell id="Bank" value="Bank" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="10" y="38" width="200" height="207" as="geometry"/></mxCell>
+    <mxCell id="Bankf" value="- id: int
+- name: String
+- rating: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="Bank"><mxGeometry y="34" width="200" height="57" as="geometry"/></mxCell>
+    <mxCell id="Banks" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="Bank"><mxGeometry y="91" width="200" height="8" as="geometry"/></mxCell>
+    <mxCell id="Bankm" value="+ getId(): int
++ getName(): String
++ getRating(): double
++ setId(int): void
++ setName(String): void
++ setRating(double): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="Bank"><mxGeometry y="99" width="200" height="108" as="geometry"/></mxCell>
+    <mxCell id="Deposit" value="«abstract»
+Deposit" style="swimlane;fontStyle=3;align=center;startSize=48;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="230" y="38" width="290" height="459" as="geometry"/></mxCell>
+    <mxCell id="Depositf" value="- id: int
+- bankId: int
+- name: String
+- type: DepositType
+- currency: String
+- minAmount: double
+- interestRate: double
+- termMonths: int
+- canWithdrawEarly: boolean
+- canReplenish: boolean
+- penaltyRate: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="Deposit"><mxGeometry y="48" width="290" height="193" as="geometry"/></mxCell>
+    <mxCell id="Deposits" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="Deposit"><mxGeometry y="241" width="290" height="8" as="geometry"/></mxCell>
+    <mxCell id="Depositm" value="+ calculateProfit(double, int): double  {abstract}
++ calculateTotalReturn(double, int): double
++ getId(): int
++ getBankId(): int
++ getName(): String
++ getType(): DepositType
++ getMinAmount(): double
++ getInterestRate(): double
++ getTermMonths(): int
++ isCanWithdrawEarly(): boolean
++ isCanReplenish(): boolean
++ getPenaltyRate(): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="Deposit"><mxGeometry y="249" width="290" height="210" as="geometry"/></mxCell>
+    <mxCell id="DepositType" value="«enum»
+DepositType" style="swimlane;fontStyle=1;align=center;startSize=48;container=1;collapsible=0;strokeColor=#d6b656;fillColor=#fff2cc;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="540" y="38" width="155" height="105" as="geometry"/></mxCell>
+    <mxCell id="DepositTypef" value="TERM
+SAVINGS
+DEMAND" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositType"><mxGeometry y="48" width="155" height="57" as="geometry"/></mxCell>
+    <mxCell id="Client" value="Client" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="715" y="38" width="215" height="207" as="geometry"/></mxCell>
+    <mxCell id="Clientf" value="- id: int
+- firstName: String
+- lastName: String
+- email: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="Client"><mxGeometry y="34" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="Clients" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="Client"><mxGeometry y="108" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="Clientm" value="+ getId(): int
++ getFirstName(): String
++ getLastName(): String
++ getEmail(): String
++ getFullName(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="Client"><mxGeometry y="116" width="215" height="91" as="geometry"/></mxCell>
+    <mxCell id="ClientDeposit" value="ClientDeposit" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="950" y="38" width="225" height="258" as="geometry"/></mxCell>
+    <mxCell id="ClientDepositf" value="- id: int
+- clientId: int
+- depositId: int
+- amount: double
+- openedAt: String
+- status: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientDeposit"><mxGeometry y="34" width="225" height="108" as="geometry"/></mxCell>
+    <mxCell id="ClientDeposits" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="ClientDeposit"><mxGeometry y="142" width="225" height="8" as="geometry"/></mxCell>
+    <mxCell id="ClientDepositm" value="+ getId(): int
++ getClientId(): int
++ getDepositId(): int
++ getAmount(): double
++ getStatus(): String
++ setStatus(String): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientDeposit"><mxGeometry y="150" width="225" height="108" as="geometry"/></mxCell>
+    <mxCell id="User" value="User" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="1195" y="38" width="215" height="190" as="geometry"/></mxCell>
+    <mxCell id="Userf" value="- id: int
+- username: String
+- passwordHash: String
+- role: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="User"><mxGeometry y="34" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="Users" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="User"><mxGeometry y="108" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="Userm" value="+ getId(): int
++ getUsername(): String
++ getPasswordHash(): String
++ getRole(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="User"><mxGeometry y="116" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="TermDeposit" value="TermDeposit" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="150" y="515" width="230" height="125" as="geometry"/></mxCell>
+    <mxCell id="TermDepositf" value="(inherits Deposit)
+canReplenish = false
+canWithdrawEarly = true" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="TermDeposit"><mxGeometry y="34" width="230" height="57" as="geometry"/></mxCell>
+    <mxCell id="TermDeposits" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="TermDeposit"><mxGeometry y="91" width="230" height="8" as="geometry"/></mxCell>
+    <mxCell id="TermDepositm" value="+ calculateProfit(double, int): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="TermDeposit"><mxGeometry y="99" width="230" height="26" as="geometry"/></mxCell>
+    <mxCell id="SavingsDeposit" value="SavingsDeposit" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="400" y="515" width="240" height="125" as="geometry"/></mxCell>
+    <mxCell id="SavingsDepositf" value="(inherits Deposit)
+canReplenish = true
+canWithdrawEarly = false" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="SavingsDeposit"><mxGeometry y="34" width="240" height="57" as="geometry"/></mxCell>
+    <mxCell id="SavingsDeposits" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="SavingsDeposit"><mxGeometry y="91" width="240" height="8" as="geometry"/></mxCell>
+    <mxCell id="SavingsDepositm" value="+ calculateProfit(double, int): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="SavingsDeposit"><mxGeometry y="99" width="240" height="26" as="geometry"/></mxCell>
+    <mxCell id="DemandDeposit" value="DemandDeposit" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="660" y="515" width="245" height="142" as="geometry"/></mxCell>
+    <mxCell id="DemandDepositf" value="(inherits Deposit)
+canReplenish = true
+canWithdrawEarly = true
+termMonths = 0" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DemandDeposit"><mxGeometry y="34" width="245" height="74" as="geometry"/></mxCell>
+    <mxCell id="DemandDeposits" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DemandDeposit"><mxGeometry y="108" width="245" height="8" as="geometry"/></mxCell>
+    <mxCell id="DemandDepositm" value="+ calculateProfit(double, int): double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DemandDeposit"><mxGeometry y="116" width="245" height="26" as="geometry"/></mxCell>
+    <mxCell id="12" value="📦 ua.lpnu.deposits.repository" style="text;html=1;strokeColor=none;fillColor=#eeeeee;align=left;verticalAlign=top;spacingLeft=6;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1"><mxGeometry x="10" y="690" width="1640" height="28" as="geometry"/></mxCell>
+    <mxCell id="BankRepository" value="«interface»
+BankRepository" style="swimlane;fontStyle=1;align=center;startSize=48;container=1;collapsible=0;strokeColor=#6c8ebf;fillColor=#dae8fc;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="10" y="725" width="220" height="173" as="geometry"/></mxCell>
+    <mxCell id="BankRepositoryf" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="BankRepository"><mxGeometry y="48" width="220" height="26" as="geometry"/></mxCell>
+    <mxCell id="BankRepositorys" value="" style="line;strokeColor=#6c8ebf;fillColor=none;" vertex="1" parent="BankRepository"><mxGeometry y="74" width="220" height="8" as="geometry"/></mxCell>
+    <mxCell id="BankRepositorym" value="+ save(Bank): Bank
++ findById(int): Optional&lt;Bank&gt;
++ findAll(): List&lt;Bank&gt;
++ findByName(String): List&lt;Bank&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="BankRepository"><mxGeometry y="82" width="220" height="91" as="geometry"/></mxCell>
+    <mxCell id="DepositRepository" value="«interface»
+DepositRepository" style="swimlane;fontStyle=1;align=center;startSize=48;container=1;collapsible=0;strokeColor=#6c8ebf;fillColor=#dae8fc;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="250" y="725" width="250" height="224" as="geometry"/></mxCell>
+    <mxCell id="DepositRepositoryf" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositRepository"><mxGeometry y="48" width="250" height="26" as="geometry"/></mxCell>
+    <mxCell id="DepositRepositorys" value="" style="line;strokeColor=#6c8ebf;fillColor=none;" vertex="1" parent="DepositRepository"><mxGeometry y="74" width="250" height="8" as="geometry"/></mxCell>
+    <mxCell id="DepositRepositorym" value="+ save(Deposit): Deposit
++ findById(int): Optional&lt;Deposit&gt;
++ findAll(): List&lt;Deposit&gt;
++ findByBankId(int): List&lt;Deposit&gt;
++ findByType(DepositType): List&lt;Deposit&gt;
++ findByCurrency(String): List&lt;Deposit&gt;
++ findByInterestRateBetween(double,double): List&lt;Deposit&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositRepository"><mxGeometry y="82" width="250" height="142" as="geometry"/></mxCell>
+    <mxCell id="ClientRepository" value="«interface»
+ClientRepository" style="swimlane;fontStyle=1;align=center;startSize=48;container=1;collapsible=0;strokeColor=#6c8ebf;fillColor=#dae8fc;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="520" y="725" width="220" height="173" as="geometry"/></mxCell>
+    <mxCell id="ClientRepositoryf" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientRepository"><mxGeometry y="48" width="220" height="26" as="geometry"/></mxCell>
+    <mxCell id="ClientRepositorys" value="" style="line;strokeColor=#6c8ebf;fillColor=none;" vertex="1" parent="ClientRepository"><mxGeometry y="74" width="220" height="8" as="geometry"/></mxCell>
+    <mxCell id="ClientRepositorym" value="+ save(Client): Client
++ findById(int): Optional&lt;Client&gt;
++ findAll(): List&lt;Client&gt;
++ findByLastName(String): List&lt;Client&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientRepository"><mxGeometry y="82" width="220" height="91" as="geometry"/></mxCell>
+    <mxCell id="ClientDepositRepository" value="«interface»
+ClientDepositRepository" style="swimlane;fontStyle=1;align=center;startSize=48;container=1;collapsible=0;strokeColor=#6c8ebf;fillColor=#dae8fc;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="760" y="725" width="255" height="156" as="geometry"/></mxCell>
+    <mxCell id="ClientDepositRepositoryf" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientDepositRepository"><mxGeometry y="48" width="255" height="26" as="geometry"/></mxCell>
+    <mxCell id="ClientDepositRepositorys" value="" style="line;strokeColor=#6c8ebf;fillColor=none;" vertex="1" parent="ClientDepositRepository"><mxGeometry y="74" width="255" height="8" as="geometry"/></mxCell>
+    <mxCell id="ClientDepositRepositorym" value="+ save(ClientDeposit): ClientDeposit
++ findById(int): Optional&lt;ClientDeposit&gt;
++ findByClientId(int): List&lt;ClientDeposit&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientDepositRepository"><mxGeometry y="82" width="255" height="74" as="geometry"/></mxCell>
+    <mxCell id="UserRepository" value="«interface»
+UserRepository" style="swimlane;fontStyle=1;align=center;startSize=48;container=1;collapsible=0;strokeColor=#6c8ebf;fillColor=#dae8fc;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="1035" y="725" width="225" height="156" as="geometry"/></mxCell>
+    <mxCell id="UserRepositoryf" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="UserRepository"><mxGeometry y="48" width="225" height="26" as="geometry"/></mxCell>
+    <mxCell id="UserRepositorys" value="" style="line;strokeColor=#6c8ebf;fillColor=none;" vertex="1" parent="UserRepository"><mxGeometry y="74" width="225" height="8" as="geometry"/></mxCell>
+    <mxCell id="UserRepositorym" value="+ findByUsername(String): Optional&lt;User&gt;
++ authenticate(String, String): boolean
++ save(User): void
++ ensureDefaultAdmin(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="UserRepository"><mxGeometry y="82" width="225" height="74" as="geometry"/></mxCell>
+    <mxCell id="13" value="📦 repository.impl" style="text;html=1;strokeColor=none;fillColor=#eeeeee;align=left;verticalAlign=top;spacingLeft=6;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1"><mxGeometry x="10" y="960" width="1640" height="28" as="geometry"/></mxCell>
+    <mxCell id="JdbcBankRepository" value="JdbcBankRepository" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="10" y="993" width="220" height="159" as="geometry"/></mxCell>
+    <mxCell id="JdbcBankRepositoryf" value="- db: DatabaseConnection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcBankRepository"><mxGeometry y="34" width="220" height="26" as="geometry"/></mxCell>
+    <mxCell id="JdbcBankRepositorys" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="JdbcBankRepository"><mxGeometry y="60" width="220" height="8" as="geometry"/></mxCell>
+    <mxCell id="JdbcBankRepositorym" value="+ save(Bank): Bank
++ findById(int): Optional&lt;Bank&gt;
++ findAll(): List&lt;Bank&gt;
++ findByName(String): List&lt;Bank&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcBankRepository"><mxGeometry y="68" width="220" height="91" as="geometry"/></mxCell>
+    <mxCell id="JdbcDepositRepository" value="JdbcDepositRepository" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="250" y="993" width="250" height="176" as="geometry"/></mxCell>
+    <mxCell id="JdbcDepositRepositoryf" value="- db: DatabaseConnection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcDepositRepository"><mxGeometry y="34" width="250" height="26" as="geometry"/></mxCell>
+    <mxCell id="JdbcDepositRepositorys" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="JdbcDepositRepository"><mxGeometry y="60" width="250" height="8" as="geometry"/></mxCell>
+    <mxCell id="JdbcDepositRepositorym" value="+ save(Deposit): Deposit
++ findById(int): Optional&lt;Deposit&gt;
++ findAll(): List&lt;Deposit&gt;
++ findByBankId(int): List&lt;Deposit&gt;
++ findByType(DepositType): List&lt;Deposit&gt;
+..." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcDepositRepository"><mxGeometry y="68" width="250" height="108" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientRepository" value="JdbcClientRepository" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="520" y="993" width="220" height="159" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientRepositoryf" value="- db: DatabaseConnection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcClientRepository"><mxGeometry y="34" width="220" height="26" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientRepositorys" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="JdbcClientRepository"><mxGeometry y="60" width="220" height="8" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientRepositorym" value="+ save(Client): Client
++ findById(int): Optional&lt;Client&gt;
++ findAll(): List&lt;Client&gt;
++ findByLastName(String): List&lt;Client&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcClientRepository"><mxGeometry y="68" width="220" height="91" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientDepositRepository" value="JdbcClientDepositRepository" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="760" y="993" width="255" height="142" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientDepositRepositoryf" value="- db: DatabaseConnection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcClientDepositRepository"><mxGeometry y="34" width="255" height="26" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientDepositRepositorys" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="JdbcClientDepositRepository"><mxGeometry y="60" width="255" height="8" as="geometry"/></mxCell>
+    <mxCell id="JdbcClientDepositRepositorym" value="+ save(ClientDeposit): ClientDeposit
++ findById(int): Optional&lt;ClientDeposit&gt;
++ findByClientId(int): List&lt;ClientDeposit&gt;
++ delete(int): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcClientDepositRepository"><mxGeometry y="68" width="255" height="74" as="geometry"/></mxCell>
+    <mxCell id="JdbcUserRepository" value="JdbcUserRepository" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="1035" y="993" width="225" height="142" as="geometry"/></mxCell>
+    <mxCell id="JdbcUserRepositoryf" value="- db: DatabaseConnection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcUserRepository"><mxGeometry y="34" width="225" height="26" as="geometry"/></mxCell>
+    <mxCell id="JdbcUserRepositorys" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="JdbcUserRepository"><mxGeometry y="60" width="225" height="8" as="geometry"/></mxCell>
+    <mxCell id="JdbcUserRepositorym" value="+ findByUsername(String): Optional&lt;User&gt;
++ authenticate(String, String): boolean
++ save(User): void
++ ensureDefaultAdmin(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="JdbcUserRepository"><mxGeometry y="68" width="225" height="74" as="geometry"/></mxCell>
+    <mxCell id="14" value="📦 ua.lpnu.deposits.service" style="text;html=1;strokeColor=none;fillColor=#eeeeee;align=left;verticalAlign=top;spacingLeft=6;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1"><mxGeometry x="10" y="1215" width="1640" height="28" as="geometry"/></mxCell>
+    <mxCell id="BankService" value="BankService" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="10" y="1248" width="230" height="207" as="geometry"/></mxCell>
+    <mxCell id="BankServicef" value="- bankRepo: BankRepository
+- depositRepo: DepositRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="BankService"><mxGeometry y="34" width="230" height="40" as="geometry"/></mxCell>
+    <mxCell id="BankServices" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="BankService"><mxGeometry y="74" width="230" height="8" as="geometry"/></mxCell>
+    <mxCell id="BankServicem" value="+ createBank(Bank): Bank
++ updateBank(Bank): Bank
++ deleteBank(int): void
++ getBankById(int): Optional&lt;Bank&gt;
++ getAllBanks(): List&lt;Bank&gt;
++ getDepositsByBank(int): List&lt;Deposit&gt;
++ searchBanksByName(String): List&lt;Bank&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="BankService"><mxGeometry y="82" width="230" height="125" as="geometry"/></mxCell>
+    <mxCell id="DepositService" value="DepositService" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="260" y="1248" width="280" height="275" as="geometry"/></mxCell>
+    <mxCell id="DepositServicef" value="- depositRepo: DepositRepository
+- clientRepo: ClientRepository
+- clientDepositRepo: ClientDepositRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositService"><mxGeometry y="34" width="280" height="57" as="geometry"/></mxCell>
+    <mxCell id="DepositServices" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DepositService"><mxGeometry y="91" width="280" height="8" as="geometry"/></mxCell>
+    <mxCell id="DepositServicem" value="+ createDeposit(Deposit): Deposit
++ updateDeposit(Deposit): Deposit
++ deleteDeposit(int): void
++ getAllDeposits(): List&lt;Deposit&gt;
++ getDepositsByType(DepositType): List&lt;Deposit&gt;
++ openDeposit(int, int, double): ClientDeposit
++ closeDeposit(int): void
++ calculateExpectedReturn(int, int): double
++ createClient(Client): Client
++ getAllClients(): List&lt;Client&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositService"><mxGeometry y="99" width="280" height="176" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterService" value="SearchFilterService" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="560" y="1248" width="275" height="244" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterServicef" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="SearchFilterService"><mxGeometry y="34" width="275" height="26" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterServices" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="SearchFilterService"><mxGeometry y="60" width="275" height="8" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterServicem" value="+ sort(List&lt;Deposit&gt;, SortField, boolean): List&lt;Deposit&gt;
++ filterByType(List&lt;Deposit&gt;, DepositType): List&lt;Deposit&gt;
++ filterByCurrency(List&lt;Deposit&gt;, String): List&lt;Deposit&gt;
++ filterByBankId(List&lt;Deposit&gt;, int): List&lt;Deposit&gt;
++ filterByWithdrawable(List&lt;Deposit&gt;): List&lt;Deposit&gt;
++ filterByReplenishable(List&lt;Deposit&gt;): List&lt;Deposit&gt;
++ filterByInterestRateRange(List, double, double): List&lt;Deposit&gt;
++ filterByMinAmountRange(List, double, double): List&lt;Deposit&gt;
++ filterByTermMonthsRange(List, int, int): List&lt;Deposit&gt;
++ applyFilters(List&lt;Deposit&gt;, DepositFilter): List&lt;Deposit&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="SearchFilterService"><mxGeometry y="68" width="275" height="176" as="geometry"/></mxCell>
+    <mxCell id="DepositFilter" value="DepositFilter" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="855" y="1248" width="215" height="309" as="geometry"/></mxCell>
+    <mxCell id="DepositFilterf" value="- type: DepositType
+- currency: String
+- bankId: Integer
+- canWithdrawEarly: Boolean
+- canReplenish: Boolean
+- minInterestRate: Double
+- maxInterestRate: Double
+- minMinAmount: Double
+- maxMinAmount: Double
+- minTermMonths: Integer
+- maxTermMonths: Integer" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositFilter"><mxGeometry y="34" width="215" height="193" as="geometry"/></mxCell>
+    <mxCell id="DepositFilters" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DepositFilter"><mxGeometry y="227" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="DepositFilterm" value="+ getType(): DepositType
++ getCurrency(): String
++ getBankId(): Integer
+... (getters / setters)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositFilter"><mxGeometry y="235" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="15" value="📦 ua.lpnu.deposits.util" style="text;html=1;strokeColor=none;fillColor=#eeeeee;align=left;verticalAlign=top;spacingLeft=6;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1"><mxGeometry x="10" y="1600" width="1640" height="28" as="geometry"/></mxCell>
+    <mxCell id="DatabaseConnection" value="DatabaseConnection" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="10" y="1633" width="245" height="139" as="geometry"/></mxCell>
+    <mxCell id="DatabaseConnectionf" value="- instance: DatabaseConnection  {static}
+- connection: Connection
+- DB_URL: String  {static}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DatabaseConnection"><mxGeometry y="34" width="245" height="57" as="geometry"/></mxCell>
+    <mxCell id="DatabaseConnections" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DatabaseConnection"><mxGeometry y="91" width="245" height="8" as="geometry"/></mxCell>
+    <mxCell id="DatabaseConnectionm" value="+ getInstance(): DatabaseConnection  {static}
++ getConnection(): Connection" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DatabaseConnection"><mxGeometry y="99" width="245" height="40" as="geometry"/></mxCell>
+    <mxCell id="AppLogger" value="AppLogger" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="275" y="1633" width="230" height="159" as="geometry"/></mxCell>
+    <mxCell id="AppLoggerf" value="- logger: Logger" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="AppLogger"><mxGeometry y="34" width="230" height="26" as="geometry"/></mxCell>
+    <mxCell id="AppLoggers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="AppLogger"><mxGeometry y="60" width="230" height="8" as="geometry"/></mxCell>
+    <mxCell id="AppLoggerm" value="+ getLogger(Class): AppLogger  {static}
++ info(String, Object...): void
++ warn(String, Object...): void
++ error(String, Throwable): void
++ debug(String, Object...): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="AppLogger"><mxGeometry y="68" width="230" height="91" as="geometry"/></mxCell>
+    <mxCell id="EmailSender" value="EmailSender" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="525" y="1633" width="210" height="142" as="geometry"/></mxCell>
+    <mxCell id="EmailSenderf" value="- host: String
+- port: int
+- username: String
+- password: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="EmailSender"><mxGeometry y="34" width="210" height="74" as="geometry"/></mxCell>
+    <mxCell id="EmailSenders" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="EmailSender"><mxGeometry y="108" width="210" height="8" as="geometry"/></mxCell>
+    <mxCell id="EmailSenderm" value="+ sendErrorEmail(String, String): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="EmailSender"><mxGeometry y="116" width="210" height="26" as="geometry"/></mxCell>
+    <mxCell id="PasswordUtil" value="PasswordUtil" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="755" y="1633" width="200" height="108" as="geometry"/></mxCell>
+    <mxCell id="PasswordUtilf" value=" " style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="PasswordUtil"><mxGeometry y="34" width="200" height="26" as="geometry"/></mxCell>
+    <mxCell id="PasswordUtils" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="PasswordUtil"><mxGeometry y="60" width="200" height="8" as="geometry"/></mxCell>
+    <mxCell id="PasswordUtilm" value="+ hash(String): String  {static}
++ matches(String, String): boolean  {static}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="PasswordUtil"><mxGeometry y="68" width="200" height="40" as="geometry"/></mxCell>
+    <mxCell id="UserSession" value="UserSession" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="975" y="1633" width="215" height="142" as="geometry"/></mxCell>
+    <mxCell id="UserSessionf" value="- currentUser: User  {static}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="UserSession"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="UserSessions" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="UserSession"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="UserSessionm" value="+ setCurrentUser(User): void  {static}
++ getCurrentUser(): User  {static}
++ isAdmin(): boolean  {static}
++ clear(): void  {static}" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="UserSession"><mxGeometry y="68" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="AppContext" value="AppContext" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="1210" y="1633" width="250" height="190" as="geometry"/></mxCell>
+    <mxCell id="AppContextf" value="- instance: AppContext  {static}
+- depositService: DepositService
+- bankService: BankService
+- searchFilterService: SearchFilterService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="AppContext"><mxGeometry y="34" width="250" height="74" as="geometry"/></mxCell>
+    <mxCell id="AppContexts" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="AppContext"><mxGeometry y="108" width="250" height="8" as="geometry"/></mxCell>
+    <mxCell id="AppContextm" value="+ getInstance(): AppContext  {static}
++ getDepositService(): DepositService
++ getBankService(): BankService
++ getSearchFilterService(): SearchFilterService" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="AppContext"><mxGeometry y="116" width="250" height="74" as="geometry"/></mxCell>
+    <mxCell id="16" value="📦 ua.lpnu.deposits.ui" style="text;html=1;strokeColor=none;fillColor=#eeeeee;align=left;verticalAlign=top;spacingLeft=6;fontSize=12;fontStyle=1;rounded=1;" vertex="1" parent="1"><mxGeometry x="10" y="1885" width="1640" height="28" as="geometry"/></mxCell>
+    <mxCell id="LoginController" value="LoginController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="10" y="1918" width="215" height="108" as="geometry"/></mxCell>
+    <mxCell id="LoginControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="LoginController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="LoginControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="LoginController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="LoginControllerm" value="+ initialize(): void
++ onLogin(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="LoginController"><mxGeometry y="68" width="215" height="40" as="geometry"/></mxCell>
+    <mxCell id="DashboardController" value="DashboardController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="240" y="1918" width="215" height="94" as="geometry"/></mxCell>
+    <mxCell id="DashboardControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DashboardController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="DashboardControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DashboardController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="DashboardControllerm" value="+ initialize(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DashboardController"><mxGeometry y="68" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="BankListController" value="BankListController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="465" y="1918" width="215" height="142" as="geometry"/></mxCell>
+    <mxCell id="BankListControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="BankListController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="BankListControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="BankListController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="BankListControllerm" value="+ initialize(): void
++ onAdd(): void
++ onEdit(): void
++ onDelete(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="BankListController"><mxGeometry y="68" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="DepositListController" value="DepositListController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="700" y="1918" width="215" height="142" as="geometry"/></mxCell>
+    <mxCell id="DepositListControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositListController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="DepositListControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DepositListController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="DepositListControllerm" value="+ initialize(): void
++ onAdd(): void
++ onEdit(): void
++ onDelete(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositListController"><mxGeometry y="68" width="215" height="74" as="geometry"/></mxCell>
+    <mxCell id="DepositFormController" value="DepositFormController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="945" y="1918" width="215" height="125" as="geometry"/></mxCell>
+    <mxCell id="DepositFormControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositFormController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="DepositFormControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="DepositFormController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="DepositFormControllerm" value="+ initialize(): void
++ onSave(): void
++ onCancel(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="DepositFormController"><mxGeometry y="68" width="215" height="57" as="geometry"/></mxCell>
+    <mxCell id="ClientListController" value="ClientListController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="1185" y="1918" width="215" height="125" as="geometry"/></mxCell>
+    <mxCell id="ClientListControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientListController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="ClientListControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="ClientListController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="ClientListControllerm" value="+ initialize(): void
++ onAdd(): void
++ onOpenDeposit(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="ClientListController"><mxGeometry y="68" width="215" height="57" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterController" value="SearchFilterController" style="swimlane;fontStyle=1;align=center;startSize=34;container=1;collapsible=0;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;" vertex="1" parent="1"><mxGeometry x="1415" y="1918" width="215" height="125" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterControllerf" value="- service: AppContext" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="SearchFilterController"><mxGeometry y="34" width="215" height="26" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterControllers" value="" style="line;strokeColor=#666666;fillColor=none;" vertex="1" parent="SearchFilterController"><mxGeometry y="60" width="215" height="8" as="geometry"/></mxCell>
+    <mxCell id="SearchFilterControllerm" value="+ initialize(): void
++ onSearch(): void
++ onReset(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;overflow=hidden;rotatable=0;fontSize=11;" vertex="1" parent="SearchFilterController"><mxGeometry y="68" width="215" height="57" as="geometry"/></mxCell>
+    <mxCell id="17" value="" style="html=1;endArrow=block;endFill=0;strokeColor=#000000;" edge="1" source="TermDeposit" target="Deposit" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="18" value="" style="html=1;endArrow=block;endFill=0;strokeColor=#000000;" edge="1" source="SavingsDeposit" target="Deposit" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="19" value="" style="html=1;endArrow=block;endFill=0;strokeColor=#000000;" edge="1" source="DemandDeposit" target="Deposit" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="20" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="Deposit" target="DepositType" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="21" value="bankId  →" style="html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;startFill=0;endFill=0;fontSize=10;" edge="1" source="Deposit" target="Bank" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="22" value="clientId  →" style="html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;startFill=0;endFill=0;fontSize=10;" edge="1" source="ClientDeposit" target="Client" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="23" value="depositId  →" style="html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;startFill=0;endFill=0;fontSize=10;" edge="1" source="ClientDeposit" target="Deposit" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="24" value="" style="html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#6c8ebf;" edge="1" source="JdbcBankRepository" target="BankRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="25" value="" style="html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#6c8ebf;" edge="1" source="JdbcDepositRepository" target="DepositRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="26" value="" style="html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#6c8ebf;" edge="1" source="JdbcClientRepository" target="ClientRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="27" value="" style="html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#6c8ebf;" edge="1" source="JdbcClientDepositRepository" target="ClientDepositRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="28" value="" style="html=1;dashed=1;endArrow=block;endFill=0;strokeColor=#6c8ebf;" edge="1" source="JdbcUserRepository" target="UserRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="29" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="BankService" target="BankRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="30" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="BankService" target="DepositRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="31" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DepositService" target="DepositRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="32" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DepositService" target="ClientRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="33" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DepositService" target="ClientDepositRepository" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="34" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="JdbcBankRepository" target="DatabaseConnection" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="35" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="JdbcDepositRepository" target="DatabaseConnection" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="36" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="JdbcClientRepository" target="DatabaseConnection" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="37" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="JdbcClientDepositRepository" target="DatabaseConnection" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="38" value="uses" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="JdbcUserRepository" target="DatabaseConnection" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="39" value="sends error" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="AppLogger" target="EmailSender" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="40" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="AppContext" target="DepositService" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="41" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="AppContext" target="BankService" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="42" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="AppContext" target="SearchFilterService" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="43" value="logs" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="BankService" target="AppLogger" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="44" value="logs" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DepositService" target="AppLogger" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="45" value="logs" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="SearchFilterService" target="AppLogger" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="46" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="LoginController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="47" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DashboardController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="48" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="BankListController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="49" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DepositListController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="50" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DepositFormController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="51" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="ClientListController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="52" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="SearchFilterController" target="AppContext" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="53" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="LoginController" target="PasswordUtil" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="54" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="LoginController" target="UserSession" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+    <mxCell id="55" value="" style="html=1;dashed=1;endArrow=open;endFill=0;fontSize=10;" edge="1" source="DashboardController" target="UserSession" parent="1"><mxGeometry relative="1" as="geometry"/></mxCell>
+  </root>
+</mxGraphModel>
