@@ -60,6 +60,9 @@ public class ClientListController implements Initializable {
     @FXML private TableColumn<ClientDepositDetail, String>  cdProfitColumn;
     @FXML private Button closeDepositButton;
 
+    private final Label depositPlaceholderLabel =
+            new Label("Оберіть клієнта для перегляду його депозитів");
+
     /** Creates a new {@code ClientListController} (instantiated by the JavaFX FXML loader). */
     public ClientListController() {}
 
@@ -92,6 +95,9 @@ public class ClientListController implements Initializable {
     }
 
     private void setupDepositColumns() {
+        depositPlaceholderLabel.setStyle("-fx-text-fill: #9ca3af;");
+        depositTable.setPlaceholder(depositPlaceholderLabel);
+
         cdIdColumn.setCellValueFactory(c ->
                 new SimpleIntegerProperty(c.getValue().getId()).asObject());
         cdNameColumn.setCellValueFactory(c ->
@@ -120,6 +126,8 @@ public class ClientListController implements Initializable {
                     if (hasSelection) {
                         loadDepositsForClient(selected);
                     } else {
+                        depositPlaceholderLabel.setText(
+                                "Оберіть клієнта для перегляду його депозитів");
                         depositTable.getItems().clear();
                         closeDepositButton.setDisable(true);
                     }
@@ -164,10 +172,14 @@ public class ClientListController implements Initializable {
         try {
             List<ClientDepositDetail> details =
                     depositService.getClientDepositDetails(client.getId());
+            if (details.isEmpty()) {
+                depositPlaceholderLabel.setText(
+                        "У клієнта «" + client.getFullName() + "» немає відкритих депозитів");
+            }
             depositTable.setItems(FXCollections.observableArrayList(details));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.error("Failed to load deposits for clientId=" + client.getId(), e);
-            AlertUtil.showError("Помилка",
+            AlertUtil.showError("Помилка завантаження",
                     "Не вдалося завантажити депозити клієнта:\n" + e.getMessage());
         }
     }

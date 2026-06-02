@@ -16,7 +16,8 @@ public class DataSeeder {
     private DataSeeder() {}
 
     /**
-     * Inserts banks, deposits, and clients if their respective tables are empty.
+     * Inserts banks, deposits, clients, and client-deposit records if their
+     * respective tables are empty.
      *
      * @throws SQLException if any database operation fails
      */
@@ -30,6 +31,9 @@ public class DataSeeder {
         }
         if (isEmpty(conn, "clients")) {
             seedClients(conn);
+        }
+        if (isEmpty(conn, "client_deposits")) {
+            seedClientDeposits(conn);
         }
     }
 
@@ -93,5 +97,29 @@ public class DataSeeder {
             st.executeUpdate(sql);
         }
         log.info("DataSeeder: seeded 5 clients");
+    }
+
+    private static void seedClientDeposits(Connection conn) throws SQLException {
+        // client ids: 1=Коваленко, 2=Шевченко, 3=Бондаренко, 4=Мельник, 5=Ткаченко
+        // deposit ids: 1=Строковий Плюс(ПриватБанк), 2=Накопичувальний(ПриватБанк),
+        //              3=До запитання(ПриватБанк),    4=Монодепозит 12M(Монобанк),
+        //              5=Моно Збереження(Монобанк),   6=Моно Флекс(Монобанк),
+        //              9=ПУМБ Поточний,               10=Райффайзен Преміум,
+        //             13=ОТП Строковий
+        String sql =
+            "INSERT INTO client_deposits (client_id, deposit_id, amount, status) VALUES " +
+            "(1,  1, 15000.00, 'ACTIVE'),"  +  // Коваленко  — Строковий Плюс
+            "(1,  4, 25000.00, 'CLOSED'),"  +  // Коваленко  — Монодепозит 12M (закритий)
+            "(2,  5, 10000.00, 'ACTIVE'),"  +  // Шевченко   — Моно Збереження
+            "(2,  9,  5000.00, 'ACTIVE'),"  +  // Шевченко   — ПУМБ Поточний
+            "(3,  1, 20000.00, 'ACTIVE'),"  +  // Бондаренко — Строковий Плюс
+            "(3, 13, 12000.00, 'CLOSED'),"  +  // Бондаренко — ОТП Строковий (закритий)
+            "(4,  2,  8000.00, 'ACTIVE'),"  +  // Мельник    — Накопичувальний
+            "(5,  6,  3000.00, 'ACTIVE'),"  +  // Ткаченко   — Моно Флекс
+            "(5, 10, 30000.00, 'ACTIVE')";     // Ткаченко   — Райффайзен Преміум
+        try (Statement st = conn.createStatement()) {
+            st.executeUpdate(sql);
+        }
+        log.info("DataSeeder: seeded 9 client deposits");
     }
 }

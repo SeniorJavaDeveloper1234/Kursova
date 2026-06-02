@@ -73,10 +73,6 @@
                     <TableColumn fx:id="cdStatusColumn" text="Статус"          prefWidth="100"/>
                     <TableColumn fx:id="cdProfitColumn" text="Очік. дохід"     prefWidth="120"/>
                 </columns>
-                <placeholder>
-                    <Label text="Оберіть клієнта для перегляду його депозитів"
-                           style="-fx-text-fill: #9ca3af;"/>
-                </placeholder>
             </TableView>
         </VBox>
 
