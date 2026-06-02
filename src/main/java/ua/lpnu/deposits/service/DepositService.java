@@ -2,6 +2,7 @@ package ua.lpnu.deposits.service;
 
 import ua.lpnu.deposits.model.Client;
 import ua.lpnu.deposits.model.ClientDeposit;
+import ua.lpnu.deposits.model.ClientDepositDetail;
 import ua.lpnu.deposits.model.Deposit;
 import ua.lpnu.deposits.model.DepositType;
 import ua.lpnu.deposits.repository.ClientDepositRepository;
@@ -10,6 +11,8 @@ import ua.lpnu.deposits.repository.DepositRepository;
 import ua.lpnu.deposits.util.AppLogger;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -463,6 +466,42 @@ public class DepositService {
             return income;
         } catch (SQLException e) {
             logger.error("Failed to calculate return for clientDepositId=" + clientDepositId, e);
+            throw e;
+        }
+    }
+
+    /**
+     * Returns enriched client-deposit rows for the given client with deposit and bank info,
+     * and calculates expected profit for each record (months from opened_at to today).
+     *
+     * @param clientId the client id
+     * @return list of detail rows ordered by opened_at descending, never {@code null}
+     * @throws SQLException on any database error
+     */
+    public List<ClientDepositDetail> getClientDepositDetails(int clientId) throws SQLException {
+        logger.debug("Fetching detailed client deposits: clientId={}", clientId);
+        try {
+            List<ClientDepositDetail> details =
+                    clientDepositRepository.findDetailedByClientId(clientId);
+            LocalDate today = LocalDate.now();
+            for (ClientDepositDetail detail : details) {
+                int months = 1;
+                String openedAt = detail.getOpenedAt();
+                if (openedAt != null && openedAt.length() >= 10) {
+                    try {
+                        LocalDate opened = LocalDate.parse(openedAt.substring(0, 10));
+                        months = Math.max(1, (int) ChronoUnit.MONTHS.between(opened, today));
+                    } catch (Exception ignored) {
+                        // keep months = 1 if date is malformed
+                    }
+                }
+                detail.setExpectedProfit(
+                        detail.getDeposit().calculateProfit(detail.getAmount(), months));
+            }
+            logger.debug("Fetched {} deposit detail(s) for clientId={}", details.size(), clientId);
+            return details;
+        } catch (SQLException e) {
+            logger.error("Failed to fetch deposit details for clientId=" + clientId, e);
             throw e;
         }
     }

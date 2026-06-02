@@ -1,6 +1,7 @@
 package ua.lpnu.deposits.repository;
 
 import ua.lpnu.deposits.model.ClientDeposit;
+import ua.lpnu.deposits.model.ClientDepositDetail;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -47,6 +48,16 @@ public interface ClientDepositRepository {
      * @throws SQLException on any database error
      */
     List<ClientDeposit> findByClientId(int clientId) throws SQLException;
+
+    /**
+     * Returns enriched client-deposit rows for the given client, joining
+     * {@code deposits} and {@code banks} in a single query.
+     *
+     * @param clientId the client id
+     * @return list of detail rows ordered by opened_at descending, never {@code null}
+     * @throws SQLException on any database error
+     */
+    List<ClientDepositDetail> findDetailedByClientId(int clientId) throws SQLException;
 
     /**
      * Returns all client records that use a specific deposit product.

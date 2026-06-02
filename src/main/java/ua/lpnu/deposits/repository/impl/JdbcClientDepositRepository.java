@@ -1,6 +1,6 @@
 package ua.lpnu.deposits.repository.impl;
 
-import ua.lpnu.deposits.model.ClientDeposit;
+import ua.lpnu.deposits.model.*;
 import ua.lpnu.deposits.repository.ClientDepositRepository;
 import ua.lpnu.deposits.util.DatabaseConnection;
 
@@ -109,6 +109,63 @@ public class JdbcClientDepositRepository implements ClientDepositRepository {
                 return result;
             }
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public List<ClientDepositDetail> findDetailedByClientId(int clientId) throws SQLException {
+        String sql = "SELECT cd.id, cd.amount, cd.opened_at, cd.status,"
+                + " d.id AS deposit_id, d.name AS deposit_name, d.type,"
+                + " d.interest_rate, d.term_months, d.can_withdraw_early,"
+                + " d.penalty_rate, d.min_amount, d.bank_id, d.can_replenish, d.currency,"
+                + " b.name AS bank_name"
+                + " FROM client_deposits cd"
+                + " JOIN deposits d ON cd.deposit_id = d.id"
+                + " JOIN banks b ON d.bank_id = b.id"
+                + " WHERE cd.client_id = ?"
+                + " ORDER BY cd.opened_at DESC";
+        try (PreparedStatement ps = connection().prepareStatement(sql)) {
+            ps.setInt(1, clientId);
+            try (ResultSet rs = ps.executeQuery()) {
+                List<ClientDepositDetail> result = new ArrayList<>();
+                while (rs.next()) {
+                    result.add(mapDetailRow(rs));
+                }
+                return result;
+            }
+        }
+    }
+
+    private ClientDepositDetail mapDetailRow(ResultSet rs) throws SQLException {
+        int id            = rs.getInt("id");
+        double amount     = rs.getDouble("amount");
+        String openedAt   = rs.getString("opened_at");
+        String status     = rs.getString("status");
+        String depositName = rs.getString("deposit_name");
+        String bankName   = rs.getString("bank_name");
+        String type       = rs.getString("type");
+        DepositType depositType = DepositType.valueOf(type);
+
+        int    depositId    = rs.getInt("deposit_id");
+        int    bankId       = rs.getInt("bank_id");
+        String currency     = rs.getString("currency");
+        double minAmount    = rs.getDouble("min_amount");
+        double interestRate = rs.getDouble("interest_rate");
+        int    termMonths   = rs.getInt("term_months");
+        double penaltyRate  = rs.getDouble("penalty_rate");
+
+        Deposit deposit = switch (type) {
+            case "TERM"    -> new TermDeposit(depositId, bankId, depositName, currency,
+                                    minAmount, interestRate, termMonths, penaltyRate);
+            case "SAVINGS" -> new SavingsDeposit(depositId, bankId, depositName, currency,
+                                    minAmount, interestRate, termMonths);
+            case "DEMAND"  -> new DemandDeposit(depositId, bankId, depositName, currency,
+                                    minAmount, interestRate);
+            default -> throw new IllegalArgumentException("Unknown deposit type in DB: " + type);
+        };
+
+        return new ClientDepositDetail(id, depositName, bankName, depositType,
+                amount, openedAt, status, deposit);
     }
 
     /** {@inheritDoc} */

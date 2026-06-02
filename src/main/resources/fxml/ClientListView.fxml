@@ -17,27 +17,70 @@
         <Button fx:id="deleteButton"       text="🗑  Видалити"   onAction="#onDelete" disable="true"
                 styleClass="danger-button"/>
         <Region HBox.hgrow="ALWAYS"/>
-        <TextField fx:id="searchField" promptText="🔍  Прізвище..."
+        <TextField fx:id="searchField" promptText="🔍  Пошук..."
                    prefWidth="220" onAction="#onSearch"
                    style="-fx-background-color: #f8fafc; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 7 12;"/>
         <Button text="Знайти"   onAction="#onSearch"/>
         <Button text="↺  Оновити" onAction="#onRefresh"/>
     </HBox>
 
-    <!-- Table -->
-    <TableView fx:id="clientTable" VBox.vgrow="ALWAYS"
-               style="-fx-background-color: white; -fx-border-width: 0; -fx-padding: 0 16 0 16;">
-        <columns>
-            <TableColumn fx:id="idColumn"        text="ID"        prefWidth="60"/>
-            <TableColumn fx:id="lastNameColumn"  text="Прізвище"  prefWidth="200"/>
-            <TableColumn fx:id="firstNameColumn" text="Ім'я"      prefWidth="180"/>
-            <TableColumn fx:id="emailColumn"     text="Email"     prefWidth="260"/>
-        </columns>
-        <placeholder>
-            <Label text="Клієнти відсутні. Натисніть «➕ Додати клієнта» для створення."
-                   style="-fx-text-fill: #9ca3af;"/>
-        </placeholder>
-    </TableView>
+    <!-- Split: client table (top) + deposit details (bottom) -->
+    <SplitPane orientation="VERTICAL" VBox.vgrow="ALWAYS"
+               dividerPositions="0.52"
+               style="-fx-background-color: #f0f4f8; -fx-padding: 0 16 0 16; -fx-box-border: transparent;">
+
+        <!-- Top: clients table -->
+        <TableView fx:id="clientTable"
+                   style="-fx-background-color: white; -fx-border-width: 0;">
+            <columns>
+                <TableColumn fx:id="idColumn"        text="ID"        prefWidth="60"/>
+                <TableColumn fx:id="lastNameColumn"  text="Прізвище"  prefWidth="200"/>
+                <TableColumn fx:id="firstNameColumn" text="Ім'я"      prefWidth="180"/>
+                <TableColumn fx:id="emailColumn"     text="Email"     prefWidth="260"/>
+            </columns>
+            <placeholder>
+                <Label text="Клієнти відсутні. Натисніть «➕ Додати клієнта» для створення."
+                       style="-fx-text-fill: #9ca3af;"/>
+            </placeholder>
+        </TableView>
+
+        <!-- Bottom: deposit details panel -->
+        <VBox style="-fx-background-color: white; -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0;">
+
+            <!-- Panel header -->
+            <HBox alignment="CENTER_LEFT" spacing="8"
+                  style="-fx-background-color: #f8fafc; -fx-padding: 8 12; -fx-border-color: transparent transparent #e2e8f0 transparent; -fx-border-width: 0 0 1 0;">
+                <Label text="💳  Депозити клієнта"
+                       style="-fx-font-weight: bold; -fx-text-fill: #1a2744; -fx-font-size: 13px;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="closeDepositButton"
+                        text="🔒  Закрити депозит"
+                        onAction="#onCloseDeposit"
+                        disable="true"
+                        styleClass="danger-button"/>
+            </HBox>
+
+            <!-- Deposit details table -->
+            <TableView fx:id="depositTable" VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white; -fx-border-width: 0;">
+                <columns>
+                    <TableColumn fx:id="cdIdColumn"     text="ID"              prefWidth="50"/>
+                    <TableColumn fx:id="cdNameColumn"   text="Назва депозиту"  prefWidth="180"/>
+                    <TableColumn fx:id="cdBankColumn"   text="Банк"            prefWidth="150"/>
+                    <TableColumn fx:id="cdTypeColumn"   text="Тип"             prefWidth="120"/>
+                    <TableColumn fx:id="cdAmountColumn" text="Сума"            prefWidth="110"/>
+                    <TableColumn fx:id="cdOpenedColumn" text="Дата відкриття"  prefWidth="120"/>
+                    <TableColumn fx:id="cdStatusColumn" text="Статус"          prefWidth="100"/>
+                    <TableColumn fx:id="cdProfitColumn" text="Очік. дохід"     prefWidth="120"/>
+                </columns>
+                <placeholder>
+                    <Label text="Оберіть клієнта для перегляду його депозитів"
+                           style="-fx-text-fill: #9ca3af;"/>
+                </placeholder>
+            </TableView>
+        </VBox>
+
+    </SplitPane>
 
     <!-- Status bar -->
     <HBox style="-fx-background-color: white; -fx-padding: 8 16; -fx-border-color: #e2e8f0 transparent transparent transparent; -fx-border-width: 1 0 0 0;">
