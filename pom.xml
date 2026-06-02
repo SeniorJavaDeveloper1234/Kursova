@@ -139,6 +139,7 @@
                     <!-- Exclude classes that require JavaFX runtime, a real DB,
                          or SMTP — these are covered by integration/manual tests -->
                     <excludes>
+                        <exclude>ua/lpnu/deposits/ui/**</exclude>
                         <exclude>ua/lpnu/deposits/Main.class</exclude>
                         <exclude>ua/lpnu/deposits/repository/impl/**</exclude>
                         <exclude>ua/lpnu/deposits/util/DatabaseConnection.class</exclude>
