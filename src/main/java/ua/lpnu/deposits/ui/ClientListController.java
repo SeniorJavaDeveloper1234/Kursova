@@ -162,7 +162,7 @@ public class ClientListController implements Initializable {
     private void onSearch() {
         String query = searchField.getText().trim();
         try {
-            List<Client> clients = depositService.searchClientsByLastName(query);
+            List<Client> clients = depositService.searchClients(query);
             clientTable.setItems(FXCollections.observableArrayList(clients));
             countLabel.setText("Знайдено: " + clients.size());
         } catch (SQLException e) {

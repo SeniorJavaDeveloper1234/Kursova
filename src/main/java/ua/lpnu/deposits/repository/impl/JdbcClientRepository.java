@@ -107,6 +107,37 @@ public class JdbcClientRepository implements ClientRepository {
 
     /** {@inheritDoc} */
     @Override
+    public List<Client> search(String query) throws SQLException {
+        boolean isNumeric = query.matches("\\d+");
+        String sql;
+        if (isNumeric) {
+            sql = "SELECT id, first_name, last_name, email FROM clients"
+                    + " WHERE id = ? OR first_name LIKE ? OR last_name LIKE ?"
+                    + " ORDER BY last_name, first_name";
+        } else {
+            sql = "SELECT id, first_name, last_name, email FROM clients"
+                    + " WHERE first_name LIKE ? OR last_name LIKE ?"
+                    + " ORDER BY last_name, first_name";
+        }
+        try (PreparedStatement ps = connection().prepareStatement(sql)) {
+            if (isNumeric) {
+                ps.setInt(1, Integer.parseInt(query));
+                ps.setString(2, "%" + query + "%");
+                ps.setString(3, "%" + query + "%");
+            } else {
+                ps.setString(1, "%" + query + "%");
+                ps.setString(2, "%" + query + "%");
+            }
+            try (ResultSet rs = ps.executeQuery()) {
+                List<Client> result = new ArrayList<>();
+                while (rs.next()) result.add(mapRow(rs));
+                return result;
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public Optional<Client> findByEmail(String email) throws SQLException {
         String sql = "SELECT id, first_name, last_name, email FROM clients WHERE email = ?";
         try (PreparedStatement ps = connection().prepareStatement(sql)) {

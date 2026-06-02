@@ -49,6 +49,15 @@ public interface ClientRepository {
     List<Client> findByLastName(String lastName) throws SQLException;
 
     /**
+     * Searches clients by id (exact, if the query is numeric), first name, or last name substring.
+     *
+     * @param query the search string
+     * @return matching clients, never {@code null}
+     * @throws SQLException on any database error
+     */
+    List<Client> search(String query) throws SQLException;
+
+    /**
      * Finds a client by exact email address.
      *
      * @param email the email to search for

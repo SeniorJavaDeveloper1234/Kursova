@@ -352,6 +352,31 @@ public class DepositService {
     }
 
     /**
+     * Searches clients by id (if numeric), first name, or last name substring.
+     * Returns all clients if the query is blank.
+     *
+     * @param query the search string
+     * @return matching clients, never {@code null}
+     * @throws SQLException on any database error
+     */
+    public List<Client> searchClients(String query) throws SQLException {
+        logger.debug("Searching clients by query='{}'", query);
+        try {
+            List<Client> result;
+            if (query == null || query.isBlank()) {
+                result = clientRepository.findAll();
+            } else {
+                result = clientRepository.search(query);
+            }
+            logger.debug("Client search returned {} result(s)", result.size());
+            return result;
+        } catch (SQLException e) {
+            logger.error("Failed to search clients by query '" + query + "'", e);
+            throw e;
+        }
+    }
+
+    /**
      * Opens a deposit for a client, enforcing the minimum amount constraint.
      *
      * @param clientId  the client id
