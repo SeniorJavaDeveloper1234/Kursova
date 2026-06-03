@@ -68,6 +68,7 @@ public class ClientListController implements Initializable {
 
     private final DepositService depositService = AppContext.getInstance().getDepositService();
 
+    /** {@inheritDoc} */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupClientColumns();

@@ -1,3 +1,7 @@
+/**
+ * Application module for the Bank Deposits management system.
+ * Provides the JavaFX UI, service layer, JDBC repositories, and utility classes.
+ */
 module ua.lpnu.deposits {
 
     // ── JavaFX ──────────────────────────────────────────────────────────────

@@ -33,6 +33,7 @@ public class LoginController implements Initializable {
 
     private UserRepository userRepository;
 
+    /** {@inheritDoc} */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userRepository = AppContext.getInstance().getUserRepository();

@@ -43,6 +43,7 @@ public class DashboardController implements Initializable {
     private final DepositService depositService = AppContext.getInstance().getDepositService();
     private final BankService    bankService    = AppContext.getInstance().getBankService();
 
+    /** {@inheritDoc} */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String user = UserSession.getCurrentUser();

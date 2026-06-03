@@ -69,6 +69,7 @@ public class SearchFilterController implements Initializable {
 
     private final Map<Integer, String> bankNames = new HashMap<>();
 
+    /** {@inheritDoc} */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadBankNames();

@@ -21,6 +21,7 @@ public class JdbcUserRepository implements UserRepository {
         return DatabaseConnection.getInstance().getConnection();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Optional<User> findByUsername(String username) throws SQLException {
         String sql = "SELECT id, username, password_hash, role FROM users WHERE username = ?";
@@ -34,6 +35,7 @@ public class JdbcUserRepository implements UserRepository {
         return Optional.empty();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean authenticate(String username, String plainText) throws SQLException {
         Optional<User> userOpt = findByUsername(username);
@@ -41,6 +43,7 @@ public class JdbcUserRepository implements UserRepository {
         return PasswordUtil.verify(plainText, userOpt.get().getPasswordHash());
     }
 
+    /** {@inheritDoc} */
     @Override
     public void save(User user) throws SQLException {
         String sql = "INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)";
@@ -52,6 +55,7 @@ public class JdbcUserRepository implements UserRepository {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void ensureDefaultAdmin() throws SQLException {
         String countSql = "SELECT COUNT(*) FROM users";

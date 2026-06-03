@@ -46,6 +46,7 @@ public class MainController implements Initializable {
     private static final String[] PAGE_TITLES =
             {"Головна панель", "Депозити", "Банки", "Клієнти", "Пошук та фільтр"};
 
+    /** {@inheritDoc} */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         navButtons = new Button[]{navDashboard, navDeposits, navBanks, navClients, navSearch};
@@ -65,22 +66,22 @@ public class MainController implements Initializable {
         showPane(0);
     }
 
-    /** @noinspection unused */
+    /** Navigates to the Dashboard pane. */
     @FXML private void onNavDashboard() { showPane(0); }
 
-    /** @noinspection unused */
+    /** Navigates to the Deposits pane. */
     @FXML private void onNavDeposits()  { showPane(1); }
 
-    /** @noinspection unused */
+    /** Navigates to the Banks pane. */
     @FXML private void onNavBanks()     { showPane(2); }
 
-    /** @noinspection unused */
+    /** Navigates to the Clients pane. */
     @FXML private void onNavClients()   { showPane(3); }
 
-    /** @noinspection unused */
+    /** Navigates to the Search &amp; Filter pane. */
     @FXML private void onNavSearch()    { showPane(4); }
 
-    /** @noinspection unused */
+    /** Logs the current user out and returns to the login screen. */
     @FXML
     private void onLogout() {
         if (!AlertUtil.showConfirm("Вихід із системи",
@@ -114,7 +115,7 @@ public class MainController implements Initializable {
      * Makes only the pane at {@code index} visible; hides and un-manages the rest.
      * Also updates the active-nav-button highlight and the top-bar title.
      *
-     * @param index 0=Dashboard, 1=Deposits, 2=Banks, 3=Search
+     * @param index 0=Dashboard, 1=Deposits, 2=Banks, 3=Clients, 4=Search &amp; Filter
      */
     private void showPane(int index) {
         ObservableList<Node> children = contentPane.getChildren();
