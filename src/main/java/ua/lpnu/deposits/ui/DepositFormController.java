@@ -13,6 +13,7 @@ import ua.lpnu.deposits.util.AppLogger;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,6 +28,8 @@ public class DepositFormController implements Initializable {
     @FXML private Label    formTitleLabel;
     @FXML private TextField nameField;
     @FXML private ComboBox<Bank>        bankComboBox;
+    @FXML private ComboBox<Client>      clientComboBox;
+    @FXML private TextField             depositAmountField;
     @FXML private ComboBox<String>      typeComboBox;
     @FXML private TextField currencyField;
     @FXML private TextField minAmountField;
@@ -44,11 +47,14 @@ public class DepositFormController implements Initializable {
     private final BankService    bankService    = AppContext.getInstance().getBankService();
 
     private Deposit editingDeposit;
+    private Client  preselectedClient;
     private Runnable onSaveCallback;
 
+    /** {@inheritDoc} */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadBanks();
+        loadClients();
         setupTypeComboBox();
         currencyField.setText("UAH");
     }
@@ -86,6 +92,8 @@ public class DepositFormController implements Initializable {
                 .filter(b -> b.getId() == deposit.getBankId())
                 .findFirst()
                 .ifPresent(bankComboBox.getSelectionModel()::select);
+
+        preselectClientForDeposit(deposit);
     }
 
     /**
@@ -103,13 +111,21 @@ public class DepositFormController implements Initializable {
 
         try {
             Deposit deposit = buildDeposit();
+            Deposit saved;
             if (editingDeposit == null) {
-                depositService.createDeposit(deposit);
+                saved = depositService.createDeposit(deposit);
                 AlertUtil.showInfo("Збережено", "Депозит успішно створено.");
             } else {
-                depositService.updateDeposit(deposit);
+                saved = depositService.updateDeposit(deposit);
                 AlertUtil.showInfo("Збережено", "Депозит успішно оновлено.");
             }
+
+            Client selectedClient = clientComboBox.getValue();
+            if (isNewClientAssignment(selectedClient)) {
+                double amount = Double.parseDouble(depositAmountField.getText());
+                depositService.openDeposit(selectedClient.getId(), saved.getId(), amount);
+            }
+
             if (onSaveCallback != null) onSaveCallback.run();
             closeWindow();
         } catch (IllegalArgumentException e) {
@@ -141,6 +157,49 @@ public class DepositFormController implements Initializable {
             logger.error("Failed to load banks for deposit form", e);
             AlertUtil.showError("Помилка", "Не вдалося завантажити список банків.");
         }
+    }
+
+    private void loadClients() {
+        try {
+            List<Client> clients = depositService.getAllClients();
+            List<Client> items = new ArrayList<>();
+            items.add(null);
+            items.addAll(clients);
+            clientComboBox.setItems(FXCollections.observableArrayList(items));
+            clientComboBox.setConverter(new javafx.util.StringConverter<>() {
+                @Override public String toString(Client c) {
+                    return c == null ? "— Не призначати —" : c.getFullName();
+                }
+                @Override public Client fromString(String s) { return null; }
+            });
+            clientComboBox.getSelectionModel().selectFirst();
+            clientComboBox.getSelectionModel().selectedItemProperty()
+                    .addListener((obs, old, selected) ->
+                            depositAmountField.setDisable(selected == null));
+        } catch (SQLException e) {
+            logger.error("Failed to load clients for deposit form", e);
+            AlertUtil.showError("Помилка", "Не вдалося завантажити список клієнтів.");
+        }
+    }
+
+    private void preselectClientForDeposit(Deposit deposit) {
+        if (deposit.getId() == 0) return;
+        try {
+            depositService.getActiveClientForDeposit(deposit.getId()).ifPresent(client -> {
+                preselectedClient = client;
+                clientComboBox.getItems().stream()
+                        .filter(c -> c != null && c.getId() == client.getId())
+                        .findFirst()
+                        .ifPresent(clientComboBox.getSelectionModel()::select);
+            });
+        } catch (SQLException e) {
+            logger.error("Failed to load linked client for deposit id=" + deposit.getId(), e);
+        }
+    }
+
+    private boolean isNewClientAssignment(Client selectedClient) {
+        if (selectedClient == null) return false;
+        return preselectedClient == null || selectedClient.getId() != preselectedClient.getId();
     }
 
     private void setupTypeComboBox() {
@@ -201,6 +260,25 @@ public class DepositFormController implements Initializable {
                 && !isValidDouble(penaltyRateField.getText())) {
             AlertUtil.showError("Помилка", "Некоректний відсоток штрафу.");
             return false;
+        }
+        Client selectedClient = clientComboBox.getValue();
+        if (isNewClientAssignment(selectedClient)) {
+            if (depositAmountField.getText().isBlank()) {
+                AlertUtil.showError("Помилка", "Введіть суму вкладу для обраного клієнта.");
+                return false;
+            }
+            if (!isValidDouble(depositAmountField.getText())) {
+                AlertUtil.showError("Помилка", "Некоректне значення суми вкладу.");
+                return false;
+            }
+            double amount   = Double.parseDouble(depositAmountField.getText());
+            double minAmount = Double.parseDouble(minAmountField.getText());
+            if (amount < minAmount) {
+                AlertUtil.showError("Помилка",
+                        "Сума вкладу (" + amount + ") не може бути меншою за мінімальну суму ("
+                        + minAmount + ").");
+                return false;
+            }
         }
         return true;
     }

@@ -526,6 +526,28 @@ public class DepositService {
     }
 
     /**
+     * Returns the first client that holds an ACTIVE deposit for the given deposit product, if any.
+     *
+     * @param depositId the deposit product id
+     * @return an {@link Optional} containing the client, or empty if none is actively linked
+     * @throws SQLException on any database error
+     */
+    public Optional<Client> getActiveClientForDeposit(int depositId) throws SQLException {
+        logger.debug("Fetching active client for depositId={}", depositId);
+        try {
+            Optional<ClientDeposit> active = clientDepositRepository.findByDepositId(depositId)
+                    .stream()
+                    .filter(cd -> "ACTIVE".equals(cd.getStatus()))
+                    .findFirst();
+            if (active.isEmpty()) return Optional.empty();
+            return clientRepository.findById(active.get().getClientId());
+        } catch (SQLException e) {
+            logger.error("Failed to fetch active client for depositId=" + depositId, e);
+            throw e;
+        }
+    }
+
+    /**
      * Returns only the ACTIVE client-deposit records for the given client.
      *
      * @param clientId the client id
