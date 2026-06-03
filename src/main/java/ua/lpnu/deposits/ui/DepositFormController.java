@@ -185,13 +185,15 @@ public class DepositFormController implements Initializable {
     private void preselectClientForDeposit(Deposit deposit) {
         if (deposit.getId() == 0) return;
         try {
-            depositService.getActiveClientForDeposit(deposit.getId()).ifPresent(client -> {
-                preselectedClient = client;
-                clientComboBox.getItems().stream()
-                        .filter(c -> c != null && c.getId() == client.getId())
-                        .findFirst()
-                        .ifPresent(clientComboBox.getSelectionModel()::select);
-            });
+            depositService.getActiveClientDepositRecordForDeposit(deposit.getId())
+                    .ifPresent(cd -> clientComboBox.getItems().stream()
+                            .filter(c -> c != null && c.getId() == cd.getClientId())
+                            .findFirst()
+                            .ifPresent(client -> {
+                                preselectedClient = client;
+                                clientComboBox.getSelectionModel().select(client);
+                                depositAmountField.setText(String.valueOf(cd.getAmount()));
+                            }));
         } catch (SQLException e) {
             logger.error("Failed to load linked client for deposit id=" + deposit.getId(), e);
         }
@@ -217,8 +219,8 @@ public class DepositFormController implements Initializable {
         boolean isSavings = "Ощадний".equals(typeLabel);
         boolean isDemand  = "До запитання".equals(typeLabel);
 
-        termLabel.setVisible(!isDemand);
-        termMonthsField.setVisible(!isDemand);
+        termLabel.setVisible(isTerm);
+        termMonthsField.setVisible(isTerm);
 
         penaltyLabel.setVisible(isTerm);
         penaltyRateField.setVisible(isTerm);
@@ -250,12 +252,11 @@ public class DepositFormController implements Initializable {
             AlertUtil.showError("Помилка", "Ставка відсотків має бути позитивним числом.");
             return false;
         }
-        boolean isDemand = "До запитання".equals(typeComboBox.getValue());
-        if (!isDemand && !isValidInt(termMonthsField.getText())) {
+        boolean isTerm = "Строковий".equals(typeComboBox.getValue());
+        if (isTerm && !isValidInt(termMonthsField.getText())) {
             AlertUtil.showError("Помилка", "Некоректне значення терміну (місяці).");
             return false;
         }
-        boolean isTerm = "Строковий".equals(typeComboBox.getValue());
         if (isTerm && !penaltyRateField.getText().isBlank()
                 && !isValidDouble(penaltyRateField.getText())) {
             AlertUtil.showError("Помилка", "Некоректний відсоток штрафу.");

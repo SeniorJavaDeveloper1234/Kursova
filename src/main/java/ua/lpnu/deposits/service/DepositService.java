@@ -98,6 +98,9 @@ public class DepositService {
     public void deleteDeposit(int id) throws SQLException {
         logger.info("Deleting deposit: id={}", id);
         try {
+            for (ClientDeposit cd : clientDepositRepository.findByDepositId(id)) {
+                clientDepositRepository.delete(cd.getId());
+            }
             depositRepository.delete(id);
             logger.info("Deposit deleted: id={}", id);
         } catch (SQLException e) {
@@ -485,18 +488,23 @@ public class DepositService {
                     clientDepositRepository.findDetailedByClientId(clientId);
             LocalDate today = LocalDate.now();
             for (ClientDepositDetail detail : details) {
-                int months = 1;
-                String openedAt = detail.getOpenedAt();
-                if (openedAt != null && openedAt.length() >= 10) {
-                    try {
-                        LocalDate opened = LocalDate.parse(openedAt.substring(0, 10));
-                        months = Math.max(1, (int) ChronoUnit.MONTHS.between(opened, today));
-                    } catch (Exception ignored) {
-                        // keep months = 1 if date is malformed
+                Deposit deposit = detail.getDeposit();
+                int months = switch (deposit.getType()) {
+                    case TERM    -> Math.max(1, deposit.getTermMonths());
+                    case DEMAND  -> 1;
+                    case SAVINGS -> {
+                        int elapsed = 1;
+                        String openedAt = detail.getOpenedAt();
+                        if (openedAt != null && openedAt.length() >= 10) {
+                            try {
+                                LocalDate opened = LocalDate.parse(openedAt.substring(0, 10));
+                                elapsed = Math.max(1, (int) ChronoUnit.MONTHS.between(opened, today));
+                            } catch (Exception ignored) { }
+                        }
+                        yield elapsed;
                     }
-                }
-                detail.setExpectedProfit(
-                        detail.getDeposit().calculateProfit(detail.getAmount(), months));
+                };
+                detail.setExpectedProfit(deposit.calculateProfit(detail.getAmount(), months));
             }
             logger.debug("Fetched {} deposit detail(s) for clientId={}", details.size(), clientId);
             return details;
@@ -543,6 +551,28 @@ public class DepositService {
             return clientRepository.findById(active.get().getClientId());
         } catch (SQLException e) {
             logger.error("Failed to fetch active client for depositId=" + depositId, e);
+            throw e;
+        }
+    }
+
+    /**
+     * Returns the active {@link ClientDeposit} record for the given deposit product, if any.
+     * Use this when both the linked client id and the invested amount are needed.
+     *
+     * @param depositId the deposit product id
+     * @return an {@link Optional} containing the record, or empty if none is actively linked
+     * @throws SQLException on any database error
+     */
+    public Optional<ClientDeposit> getActiveClientDepositRecordForDeposit(int depositId)
+            throws SQLException {
+        logger.debug("Fetching active client deposit record for depositId={}", depositId);
+        try {
+            return clientDepositRepository.findByDepositId(depositId)
+                    .stream()
+                    .filter(cd -> "ACTIVE".equals(cd.getStatus()))
+                    .findFirst();
+        } catch (SQLException e) {
+            logger.error("Failed to fetch active client deposit record for depositId=" + depositId, e);
             throw e;
         }
     }

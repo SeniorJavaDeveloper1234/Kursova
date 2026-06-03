@@ -211,7 +211,7 @@ public class DepositListController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/fxml/DepositFormView.fxml"));
-            Scene scene = new Scene(loader.load(), 520, 500);
+            Scene scene = new Scene(loader.load(), 520, 700);
             scene.getStylesheets().add(
                     getClass().getResource("/css/style.css").toExternalForm());
             Stage stage = new Stage();
